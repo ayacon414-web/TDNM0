@@ -3,400 +3,716 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TDNM ｜ Everything Flows</title>
-    
+    <title>TDNM | EVERYTHING FLOWS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;1,300&family=Noto+Serif+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
-
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        tdnm: {
-                            bg: '#F5F1EB',        /* 優しく素朴な和の背景色 */
-                            main: '#4A3A2A',      /* 深みのあるブラウン */
-                            text: '#2F4F3A',      /* 苔や深く静かな森を思わせるグリーン */
-                            accent: '#8C6A3D',    /* 鈍い光を放つゴールド・アクセント */
-                            sub: '#D8B58A',       /* 柔らかな砂や木肌のようなベージュ */
-                            line: '#E3DCD3',      /* 繊細な境界線用のライトグレー */
-                        }
-                    },
-                    fontFamily: {
-                        serif: ['"Noto Serif JP"', 'serif'],
-                        sans: ['"Montserrat"', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        /* --- Reset & Base Styles --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #F5F1EB;
+            --main-color: #4A3A2A;
+            --main-text: #2F4F3A;
+            --accent-color: #8C6A3D;
+            --sub-color: #D8B58A;
+            --font-en: 'Montserrat', sans-serif;
+            --font-ja: 'Noto Serif JP', serif;
+        }
+
         body {
-            background-color: #F5F1EB;
-            color: #2F4F3A;
+            background-color: var(--bg-color);
+            color: var(--main-text);
+            font-family: var(--font-ja);
+            font-size: 15px;
+            line-height: 1.8;
+            letter-spacing: 0.05em;
             overflow-x: hidden;
-            font-feature-settings: "palt"; /* 文字詰めを行って美しい縦書き・横書きに */
-            letter-spacing: 0.08em;
+            -webkit-font-smoothing: antialiased;
         }
-        html {
-            scroll-behavior: smooth;
+
+        /* --- Layout & Utilities --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
         }
-        /* 縦書きの美しいモダンエディトリアル演出 */
-        .vertical-text {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
+
+        section {
+            padding: 100px 0;
+            position: relative;
         }
-        /* 水面の揺らぎをイメージしたオーガニックな光のアニメーション */
-        .water-gradient {
-            background: radial-gradient(circle at 50% 50%, rgba(216, 181, 138, 0.15), transparent 60%);
-            animation: pulseGlow 12s infinite alternate ease-in-out;
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.2s ease, transform 1.2s ease;
         }
-        @keyframes pulseGlow {
-            0% { transform: scale(1) translate(0px, 0px); opacity: 0.5; }
-            50% { transform: scale(1.2) translate(20px, -20px); opacity: 0.8; }
-            100% { transform: scale(0.9) translate(-10px, 10px); opacity: 0.4; }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Typography --- */
+        .en-title {
+            font-family: var(--font-en);
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--main-color);
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(245, 241, 235, 0.85);
+            backdrop-filter: blur(5px);
+        }
+
+        .logo {
+            font-family: var(--font-en);
+            font-weight: 400;
+            font-size: 1.5rem;
+            letter-spacing: 0.15em;
+            color: var(--main-color);
+            text-decoration: none;
+        }
+
+        /* --- Hero Section --- */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 100px;
+            overflow: hidden;
+            background: radial-gradient(circle at 80% 20%, rgba(216, 181, 138, 0.15), transparent 50%),
+                        radial-gradient(circle at 10% 80%, rgba(74, 58, 42, 0.05), transparent 40%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero-brand {
+            font-family: var(--font-en);
+            font-size: 4.5rem;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            color: var(--main-color);
+            margin-bottom: 10px;
+            line-height: 1;
+            padding-left: 0.3em;
+        }
+
+        .hero-tagline {
+            font-family: var(--font-en);
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.4em;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            margin-bottom: 50px;
+        }
+
+        .hero-main-copy {
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 2;
+            color: var(--main-color);
+            margin-bottom: 40px;
+        }
+
+        .hero-sub-copy {
+            font-size: 1rem;
+            line-height: 2.2;
+            color: var(--main-text);
+            font-weight: 300;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-en);
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            writing-mode: vertical-lr;
+            animation: pulse 2.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, 0); opacity: 0.3; }
+            50% { transform: translate(-50%, 10px); opacity: 1; }
+            100% { transform: translate(-50%, 0); opacity: 0.3; }
+        }
+
+        /* --- Philosophy Section --- */
+        #philosophy {
+            background-color: #Fdfbf7;
+        }
+
+        .philosophy-layout {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+        }
+
+        .philosophy-text {
+            flex: 1;
+            font-size: 1.05rem;
+            line-height: 2.3;
+            font-weight: 300;
+        }
+
+        .philosophy-text p {
+            margin-bottom: 2rem;
+        }
+
+        .philosophy-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .philosophy-image-box {
+            flex: 1;
+            position: relative;
+        }
+
+        .svg-container {
+            width: 100%;
+            padding-top: 120%;
+            position: relative;
+            background: var(--bg-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.02);
+            overflow: hidden;
+        }
+
+        .svg-container svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- Our Stance Section --- */
+        .stance-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .stance-card {
+            background: #Fdfbf7;
+            padding: 50px 40px;
+            border-left: 1px solid var(--sub-color);
+            transition: transform 0.5s ease;
+        }
+
+        .stance-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stance-card h3 {
+            font-family: var(--font-en);
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--main-color);
+            margin-bottom: 5px;
+            letter-spacing: 0.1em;
+        }
+
+        .stance-card .stance-ja {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .stance-card p {
+            font-size: 0.95rem;
+            line-height: 2;
+            font-weight: 300;
+        }
+
+        /* --- What We Do Section --- */
+        #what-we-do {
+            background-color: #Fdfbf7;
+        }
+
+        .section-intro {
+            font-size: 1.2rem;
+            line-height: 2;
+            margin-bottom: 60px;
+            max-width: 700px;
+            color: var(--main-color);
+        }
+
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .service-item {
+            display: flex;
+            border-bottom: 1px solid rgba(74, 58, 42, 0.1);
+            padding-bottom: 40px;
+        }
+
+        .service-num {
+            font-family: var(--font-en);
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--sub-color);
+            width: 80px;
+        }
+
+        .service-body {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+        }
+
+        .service-body h3 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--main-color);
+            line-height: 1.4;
+        }
+
+        .service-body p {
+            font-size: 0.95rem;
+            line-height: 1.9;
+            font-weight: 300;
+        }
+
+        /* --- How We Work Section --- */
+        .work-layout {
+            display: flex;
+            gap: 80px;
+            align-items: stretch;
+        }
+
+        .work-text {
+            flex: 1.2;
+            font-size: 1.05rem;
+            line-height: 2.2;
+            font-weight: 300;
+        }
+
+        .work-image-box {
+            flex: 0.8;
+        }
+
+        /* --- Story Section --- */
+        #story {
+            background-color: var(--main-color);
+            color: #F5F1EB;
+        }
+
+        #story .section-title, #story .en-title {
+            color: #F5F1EB;
+        }
+
+        .story-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+            line-height: 2.3;
+            font-weight: 300;
+            text-align: justify;
+        }
+
+        .story-content p {
+            margin-bottom: 2rem;
+        }
+
+        .story-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* --- Contact Section --- */
+        #contact {
+            text-align: center;
+            background: linear-gradient(to bottom, #Fdfbf7, var(--bg-color));
+            padding: 120px 0;
+        }
+
+        .contact-box {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-box p {
+            font-size: 1rem;
+            line-height: 2;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .contact-cta {
+            font-size: 1.2rem;
+            color: var(--main-color);
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .btn-contact {
+            display: inline-block;
+            font-family: var(--font-en);
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            color: #F5F1EB;
+            background-color: var(--main-color);
+            padding: 18px 60px;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: background-color 0.3s, transform 0.3s;
+            border: 1px solid var(--main-color);
+        }
+
+        .btn-contact:hover {
+            background-color: transparent;
+            color: var(--main-color);
+            transform: translateY(-2px);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: #ECE7E1;
+            padding: 60px 0;
+            color: var(--main-color);
+            font-size: 0.85rem;
+            font-weight: 300;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 40px;
+            align-items: flex-start;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h2 {
+            font-family: var(--font-en);
+            font-weight: 400;
+            font-size: 1.6rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 5px;
+        }
+
+        .footer-brand .tagline {
+            font-family: var(--font-en);
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            color: var(--accent-color);
+            text-transform: uppercase;
+        }
+
+        .footer-info {
+            text-align: right;
+            line-height: 2;
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(74, 58, 42, 0.1);
+            padding-top: 20px;
+            font-size: 0.75rem;
+            font-family: var(--font-en);
+            letter-spacing: 0.05em;
+            color: rgba(47, 79, 58, 0.7);
+        }
+
+        /* --- Responsive Style --- */
+        @media (max-width: 968px) {
+            .philosophy-layout, .work-layout {
+                flex-direction: column;
+                gap: 40px;
+            }
+            .stance-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .service-body {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .footer-info {
+                text-align: left;
+            }
+            .hero-brand {
+                font-size: 3rem;
+            }
+            .hero-main-copy {
+                font-size: 1.5rem;
+            }
+            section {
+                padding: 70px 0;
+            }
         }
     </style>
 </head>
-<body class="font-serif antialiased selection:bg-tdnm-sub selection:text-tdnm-main">
+<body>
 
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div class="water-gradient absolute -top-1/4 -left-1/4 w-[100vw] h-[100vw] rounded-full blur-3xl"></div>
-        <div class="water-gradient absolute -bottom-1/4 -right-1/4 w-[80vw] h-[80vw] rounded-full blur-3xl" style="animation-delay: -4s;"></div>
-    </div>
-
-    <header class="sticky top-0 z-50 w-full bg-tdnm-bg/80 backdrop-blur-md border-b border-tdnm-line px-6 md:px-12 py-5 flex justify-between items-center mix-blend-multiply">
-        <div class="flex flex-col">
-            <a href="#" class="font-sans font-light text-xl tracking-[0.2em] text-tdnm-main">TDNM</a>
-            <span class="text-[9px] font-sans tracking-[0.1em] text-tdnm-accent/80 uppercase">Everything Flows</span>
-        </div>
-        
-        <nav class="hidden md:flex items-center gap-8 text-[11px] tracking-[0.15em] font-sans text-tdnm-main">
-            <a href="#philosophy" class="hover:text-tdnm-accent transition-colors duration-300">PHILOSOPHY</a>
-            <a href="#stance" class="hover:text-tdnm-accent transition-colors duration-300">STANCE</a>
-            <a href="#what-we-do" class="hover:text-tdnm-accent transition-colors duration-300">WHAT WE DO</a>
-            <a href="#story" class="hover:text-tdnm-accent transition-colors duration-300">STORY</a>
-            <a href="#contact" class="hover:text-tdnm-accent transition-colors duration-300 border-b border-tdnm-main pb-0.5">CONTACT</a>
-        </nav>
+    <header>
+        <a href="#" class="logo">TDNM</a>
     </header>
 
-    <main class="relative z-10">
-
-        <section class="relative min-h-[calc(100vh-69px)] w-full flex flex-col justify-between p-6 md:p-16 overflow-hidden border-b border-tdnm-line">
-            <div class="absolute inset-6 md:inset-12 border border-tdnm-line/60 pointer-events-none z-0"></div>
-            
-            <div class="w-full flex justify-between items-start pt-8 z-10">
-                <div class="max-w-xl space-y-1 md:space-y-2">
-                    <p class="font-sans text-[10px] uppercase tracking-[0.3em] text-tdnm-accent font-bold">Concept Journal</p>
-                    <p class="text-xs md:text-sm text-tdnm-main/80 tracking-widest leading-relaxed">徒然なるままに。ゆるく、でも、まっすぐに。</p>
-                </div>
-                <div class="hidden lg:block font-sans text-right text-[10px] tracking-[0.2em] text-tdnm-main/40 leading-loose">
-                    SAITAMA, JAPAN<br>EST. 2026
-                </div>
+    <section id="hero">
+        <div class="hero-content">
+            <h1 class="hero-brand">TDNM</h1>
+            <div class="hero-tagline">Everything Flows</div>
+            <div class="hero-main-copy">
+                世界観や価値観を、<br>
+                かたちにする。
             </div>
-
-            <div class="my-auto py-12 flex justify-center lg:justify-end lg:pr-24 z-10">
-                <div class="vertical-text text-tdnm-main space-y-4 md:space-y-6 h-[380px] md:h-[460px] flex flex-row-reverse items-start">
-                    <h1 class="text-2xl md:text-4xl font-bold leading-normal tracking-[0.3em] pb-4">
-                        世界観や価値観を、<br>かたちにする。
-                    </h1>
-                    <p class="text-sm md:text-base text-tdnm-text/90 leading-loose tracking-[0.2em] pt-2">
-                        整理されていない想いも、<br>
-                        まだ言葉になっていない構想も、<br>
-                        その奥にある「本質」から整えていく。
-                    </p>
-                    <p class="text-sm md:text-base text-tdnm-text/90 leading-loose tracking-[0.2em] pt-2">
-                        変わり続ける時代の中で、<br>
-                        流れに逆らわず、<br>
-                        でも、自分の芯は見失わない。
-                    </p>
-                </div>
+            <div class="hero-sub-copy">
+                整理されていない想いも、まだ言葉になっていない構想も、<br>
+                その奥にある「本質」から整えていく。<br>
+                変わり続ける時代の中で、流れに逆らわず、<br>
+                でも、自分の芯は見失わない。<br><br>
+                徒然なるままに。ゆるく、でも、まっすぐに。
             </div>
+        </div>
+        <div class="scroll-down">scroll</div>
+    </section>
 
-            <div class="w-full flex flex-col md:flex-row justify-between items-start md:items-end pb-8 z-10 gap-4">
-                <div class="font-sans">
-                    <span class="text-[32px] md:text-[54px] font-light tracking-[0.2em] text-tdnm-main leading-none block">everything flows</span>
-                    <span class="text-xs tracking-[0.4em] text-tdnm-accent block mt-1">TDNM</span>
+    <section id="philosophy">
+        <div class="container">
+            <div class="philosophy-layout">
+                <div class="philosophy-text fade-in">
+                    <span class="en-title">Philosophy</span>
+                    <h2 class="section-title">思想</h2>
+                    <p>世界は、ずっと流れ続けている。<br>人も、働き方も、価値観も、少しずつ形を変えていく。</p>
+                    <p>変わることは、失うことじゃない。<br>流れの中で削ぎ落とされながら、本当に大切なものだけが残っていく。</p>
+                    <p>TDNMは、「徒然なるままに」という感覚を大切にしながら、無理をせず、でも、誤魔化さず、自分たちらしいスタンスで創ることを選び続けています。</p>
+                    <p>整えることは、飾ることではなく、本質を見つけること。<br>ゆるく、生きる。でも、芯はまっすぐに。</p>
                 </div>
-                <div class="text-[10px] font-sans tracking-[0.2em] text-tdnm-main/40 flex items-center gap-3">
-                    <span class="inline-block w-8 h-[1px] bg-tdnm-line"></span> SCROLL DOWN
-                </div>
-            </div>
-        </section>
-
-
-        <section id="philosophy" class="w-full border-b border-tdnm-line py-24 md:py-36 px-6 md:px-12 relative">
-            <div class="max-w-4xl mx-auto text-center space-y-12 md:space-y-16">
-                <div class="space-y-2" data-aos="fade-up">
-                    <span class="font-sans text-[10px] uppercase tracking-[0.3em] text-tdnm-accent">Philosophy</span>
-                    <h2 class="text-lg md:text-xl font-bold tracking-[0.2em] text-tdnm-main">思想</h2>
-                </div>
-
-                <div class="text-base md:text-lg text-tdnm-text leading-[2.2] tracking-[0.15em] space-y-8 font-light" data-aos="fade-up" data-aos-delay="200">
-                    <p>
-                        世界は、ずっと流れ続けている。<br>
-                        人も、働き方も、価値観も、<br>
-                        少しずつ形を変えていく。
-                    </p>
-                    <p>
-                        変わることは、失うことじゃない。<br>
-                        流れの中で削ぎ落とされながら、<br>
-                        本当に大切なものだけが残っていく。
-                    </p>
-                    <p>
-                        TDNMは、「徒然なるままに」という感覚を大切にしながら、<br>
-                        無理をせず、でも、誤魔化さず、<br>
-                        自分たちらしいスタンスで創ることを選び続けています。
-                    </p>
-                    <p class="pt-6 font-normal text-tdnm-main text-lg md:text-xl tracking-[0.2em]">
-                        整えることは、飾ることではなく、本質を見つけること。
-                    </p>
-                    <p class="text-sm md:text-base text-tdnm-accent tracking-[0.2em]">
-                        ゆるく、生きる。でも、芯はまっすぐに。
-                    </p>
-                </div>
-            </div>
-        </section>
-
-
-        <section id="stance" class="w-full border-b border-tdnm-line py-24 md:py-36 px-6 md:px-12 bg-white/20">
-            <div class="max-w-6xl mx-auto">
-                <div class="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                    <div class="space-y-2">
-                        <span class="font-sans text-[10px] uppercase tracking-[0.3em] text-tdnm-accent">Our Stance</span>
-                        <h2 class="text-xl md:text-2xl font-bold tracking-[0.2em] text-tdnm-main">価値観</h2>
-                    </div>
-                    <p class="text-xs text-tdnm-text/70 tracking-widest">流されることと、柔軟であることは違う。</p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 border-t border-tdnm-line/80">
-                    <div class="p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-tdnm-line space-y-8 flex flex-col justify-between min-h-[300px]" data-aos="fade-up">
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-baseline">
-                                <h3 class="text-xl font-bold text-tdnm-main tracking-widest">Flow</h3>
-                                <span class="font-sans text-xs italic text-tdnm-sub">01</span>
-                            </div>
-                            <p class="text-xs text-tdnm-accent tracking-widest font-medium">変化を恐れない</p>
-                        </div>
-                        <p class="text-sm text-tdnm-text leading-loose tracking-wide font-light">
-                            世界も、人も、いつも流れ続けている。だからこそ、今の自分に合った形へ、しなやかに変化していく。
-                        </p>
-                    </div>
-
-                    <div class="p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-tdnm-line space-y-8 flex flex-col justify-between min-h-[300px]" data-aos="fade-up" data-aos-delay="100">
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-baseline">
-                                <h3 class="text-xl font-bold text-tdnm-main tracking-widest">Natural</h3>
-                                <span class="font-sans text-xs italic text-tdnm-sub">02</span>
-                            </div>
-                            <p class="text-xs text-tdnm-accent tracking-widest font-medium">無理をしない</p>
-                        </div>
-                        <p class="text-sm text-tdnm-text leading-loose tracking-wide font-light">
-                            背伸びした言葉より、自然体の温度感を大切にする。“ちゃんとして見えること”より、“ちゃんと伝わること”。
-                        </p>
-                    </div>
-
-                    <div class="p-8 md:p-12 border-b-0 border-tdnm-line space-y-8 flex flex-col justify-between min-h-[300px]" data-aos="fade-up" data-aos-delay="200">
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-baseline">
-                                <h3 class="text-xl font-bold text-tdnm-main tracking-widest">Core</h3>
-                                <span class="font-sans text-xs italic text-tdnm-sub">03</span>
-                            </div>
-                            <p class="text-xs text-tdnm-accent tracking-widest font-medium">ゆるくても、ブレない</p>
-                        </div>
-                        <p class="text-sm text-tdnm-text leading-loose tracking-wide font-light">
-                            流されることと、柔軟であることは違う。静かな芯を持ちながら、その人らしい形を整えていく。
-                        </p>
+                <div class="philosophy-image-box fade-in">
+                    <div class="svg-container">
+                        <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#F5F1EB;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#E3DDD5;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <rect width="400" height="480" fill="url(#grad1)"/>
+                            <path d="M-50,200 Q80,120 220,180 T450,120 L450,490 L-50,490 Z" fill="#ECE7E1" opacity="0.6"/>
+                            <path d="M-20,280 Q120,240 260,310 T430,220 L430,490 L-20,490 Z" fill="#E4DDD3" opacity="0.4"/>
+                            <path d="M300,-10 C280,60 220,120 180,180 C150,220 120,300 130,350" fill="none" stroke="#4A3A2A" stroke-width="0.5" opacity="0.15"/>
+                            <path d="M350,20 C320,90 270,160 240,210 C200,270 210,340 190,400" fill="none" stroke="#4A3A2A" stroke-width="0.5" opacity="0.1"/>
+                            <circle cx="280" cy="160" r="40" fill="none" stroke="#8C6A3D" stroke-width="0.5" opacity="0.25"/>
+                        </svg>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
+    <section id="stance">
+        <div class="container">
+            <span class="en-title">Our Stance</span>
+            <h2 class="section-title">価値観</h2>
+            <div class="stance-grid">
+                <div class="stance-card fade-in">
+                    <h3>Flow</h3>
+                    <div class="stance-ja">変化を恐れない</div>
+                    <p>世界も、人も、いつも流れ続けている。だからこそ、今の自分に合った形へ、しなやかに変化していく。</p>
+                </div>
+                <div class="stance-card fade-in">
+                    <h3>Natural</h3>
+                    <div class="stance-ja">無理をしない</div>
+                    <p>背伸びした言葉より、自然体の温度感を大切にする。“ちゃんとして見えること”より、“ちゃんと伝わること”。</p>
+                </div>
+                <div class="stance-card fade-in">
+                    <h3>Core</h3>
+                    <div class="stance-ja">ゆるくても、ブレない</div>
+                    <p>流されることと、柔軟であることは違う。静かな芯を持ちながら、その人らしい形を整えていく。</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <section id="what-we-do" class="w-full border-b border-tdnm-line py-24 md:py-36 px-6 md:px-12 bg-white/40">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center space-y-6 mb-20 md:mb-28">
-                    <div class="space-y-2">
-                        <span class="font-sans text-[10px] uppercase tracking-[0.3em] text-tdnm-accent">What We Do</span>
-                        <h2 class="text-xl md:text-2xl font-bold tracking-[0.2em] text-tdnm-main">事業内容</h2>
-                    </div>
-                    <div class="max-w-xl mx-auto pt-4 border-t border-tdnm-line/60">
-                        <p class="text-base font-bold text-tdnm-main tracking-widest mb-2">想いを、社会に翻訳する。</p>
-                        <p class="text-xs text-tdnm-text/80 leading-relaxed tracking-widest font-light">
-                            TDNMは、単なる制作会社ではありません。「何を作るか」の前に、“本当は何を伝えたいのか”を整理するところから始めます。
-                        </p>
+    <section id="what-we-do">
+        <div class="container">
+            <span class="en-title">What We Do</span>
+            <h2 class="section-title">事業内容</h2>
+            <div class="section-intro fade-in">
+                想いを、社会に翻訳する。<br>
+                TDNMは、単なる制作会社ではありません。「何を作るか」の前に、“本当は何を伝えたいのか”を整理するところから始めます。
+            </div>
+            <div class="services-list">
+                <div class="service-item fade-in">
+                    <div class="service-num">01</div>
+                    <div class="service-body">
+                        <h3>コンセプト整理 /<br>MVV設計</h3>
+                        <p>頭の中にある想いや感覚を、伝わる言葉へ整理します。理念・世界観・ブランドの軸を、一緒に言語化します。</p>
                     </div>
                 </div>
-
-                <div class="space-y-12">
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 py-8 border-b border-tdnm-line/60 items-start" data-aos="fade-up">
-                        <div class="md:col-span-4 font-sans text-xs text-tdnm-accent font-bold tracking-widest">01 / CONCEPT</div>
-                        <div class="md:col-span-4 text-base font-bold text-tdnm-main tracking-wide">コンセプト整理 / MVV設計</div>
-                        <div class="md:col-span-4 text-xs text-tdnm-text/90 leading-loose tracking-wide font-light">
-                            頭の中にある想いや感覚を、伝わる言葉へ整理します。理念・世界観・ブランドの軸を、一緒に言語化します。
-                        </div>
+                <div class="service-item fade-in">
+                    <div class="service-num">02</div>
+                    <div class="service-body">
+                        <h3>サービス構造化 /<br>事業整理</h3>
+                        <p>やりたいことが多すぎて整理できない。伝えたいことが散らかっている。そんな状態から、「誰に・何を・どう届けるか」を整えていきます。</p>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 py-8 border-b border-tdnm-line/60 items-start" data-aos="fade-up">
-                        <div class="md:col-span-4 font-sans text-xs text-tdnm-accent font-bold tracking-widest">02 / ARCHITECTURE</div>
-                        <div class="md:col-span-4 text-base font-bold text-tdnm-main tracking-wide">サービス構造化 / 事業整理</div>
-                        <div class="md:col-span-4 text-xs text-tdnm-text/90 leading-loose tracking-wide font-light">
-                            やりたいことが多すぎて整理できない。伝えたいことが散らかっている。そんな状態から、「誰に・何を・どう届けるか」を整えてしていきます。
-                        </div>
+                </div>
+                <div class="service-item fade-in">
+                    <div class="service-num">03</div>
+                    <div class="service-body">
+                        <h3>提案資料 /<br>ブランド提案</h3>
+                        <p>ただ綺麗なだけでは終わらない。温度感・思想・空気感まで含めて、“伝わる提案”を設計します。</p>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 py-8 border-b border-tdnm-line/60 items-start" data-aos="fade-up">
-                        <div class="md:col-span-4 font-sans text-xs text-tdnm-accent font-bold tracking-widest">03 / PROPOSAL</div>
-                        <div class="md:col-span-4 text-base font-bold text-tdnm-main tracking-wide">提案資料 / ブランド提案</div>
-                        <div class="md:col-span-4 text-xs text-tdnm-text/90 leading-loose tracking-wide font-light">
-                            ただ綺麗なだけでは終わらない。温度感・思想・空気感まで含めて、“伝わる提案”を設計します。
-                        </div>
+                </div>
+                <div class="service-item fade-in">
+                    <div class="service-num">04</div>
+                    <div class="service-body">
+                        <h3>Web /<br>ビジュアル制作</h3>
+                        <p>世界観を、視覚として表現する。ロゴ、Web、SNS、資料、ビジュアル。ブランドの空気感まで一貫して設計します。</p>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 py-8 border-b border-tdnm-line/60 items-start" data-aos="fade-up">
-                        <div class="md:col-span-4 font-sans text-xs text-tdnm-accent font-bold tracking-widest">04 / CREATIVE</div>
-                        <div class="md:col-span-4 text-base font-bold text-tdnm-main tracking-wide">Web / ビジュアル制作</div>
-                        <div class="md:col-span-4 text-xs text-tdnm-text/90 leading-loose tracking-wide font-light">
-                            世界観を、視覚として表現する。ロゴ、Web、SNS、資料、ビジュアル。ブランドの空気感まで一貫して設計します。
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 py-8 items-start" data-aos="fade-up">
-                        <div class="md:col-span-4 font-sans text-xs text-tdnm-accent font-bold tracking-widest">05 / INTEGRATION</div>
-                        <div class="md:col-span-4 text-base font-bold text-tdnm-main tracking-wide">AI活用 / 業務導線整理</div>
-                        <div class="md:col-span-4 text-xs text-tdnm-text/90 leading-loose tracking-wide font-light">
-                            AIを使うことが目的ではなく、“人が本来やりたいこと”に集中できる状態をつくる。苦手な実務や整理を、無理のない形でサポートします。
-                        </div>
+                </div>
+                <div class="service-item fade-in">
+                    <div class="service-num">05</div>
+                    <div class="service-body">
+                        <h3>AI活用 /<br>業務導線整理</h3>
+                        <p>AIを使うことが目的ではなく、“人が本来やりたいこと”に集中できる状態をつくる。苦手な実務や整理を、無理のない形でサポートします。</p>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-
-        <section class="w-full border-b border-tdnm-line py-24 md:py-36 px-6 md:px-12 bg-tdnm-main text-white relative">
-            <div class="max-w-4xl mx-auto space-y-12 md:space-y-16">
-                <div class="space-y-2 text-center">
-                    <span class="font-sans text-[10px] uppercase tracking-[0.3em] text-tdnm-sub">How We Work</span>
-                    <h2 class="text-xl md:text-2xl font-bold tracking-[0.2em]">制作スタンス</h2>
+    <section id="how-we-work">
+        <div class="container">
+            <div class="work-layout">
+                <div class="work-text fade-in">
+                    <span class="en-title">How We Work</span>
+                    <h2 class="section-title">制作スタンス</h2>
+                    <p>TDNMは、「何を作るか」より、「何を伝えたいか」を一緒に考えるチームです。</p>
+                    <p>きれいなデザインより、正直な言葉。<br>目立つ表現より、残っていく意味。<br>流行を追うより、その人らしい“スタンス”を整える。</p>
+                    <p>私たちは、完成品だけを作りたいわけではありません。<br>言葉になる前の想い。整理しきれていない熱量。まだ途中の構想。そういう“流れの途中”から、一緒に伴走していきます。</p>
                 </div>
-
-                <div class="text-center font-light leading-[2.2] tracking-[0.15em] space-y-8 max-w-2xl mx-auto">
-                    <p class="text-sm md:text-base text-tdnm-sub tracking-[0.2em] font-medium mb-6">
-                        TDNMは、「何を作るか」より、<br class="hidden md:inline">「何を伝えたいか」を一緒に考えるチームです。
-                    </p>
-                    <div class="space-y-4 text-white/90 text-sm md:text-base">
-                        <p>きれいなデザインより、正直な言葉。</p>
-                        <p>目立つ表現より、残っていく意味。</p>
-                        <p>流行を追うより、その人らしい“スタンス”を整える。</p>
-                    </div>
-                    <p class="pt-8 text-xs md:text-sm text-white/80 border-t border-white/10 mt-8">
-                        私たちは、完成品だけを作りたいわけではありません。<br>
-                        言葉になる前の想い。整理しきれていない熱量。まだ途中の構想。<br>
-                        そういう“流れの途中”から、一緒に伴走していきます。
-                    </p>
-                </div>
-            </div>
-        </section>
-
-
-        <section id="story" class="w-full border-b border-tdnm-line py-24 md:py-36 px-6 md:px-12">
-            <div class="max-w-4xl mx-auto">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-                    
-                    <div class="lg:col-span-4 lg:sticky lg:top-28 space-y-2">
-                        <span class="font-sans text-[10px] uppercase tracking-[0.3em] text-tdnm-accent">Story</span>
-                        <h2 class="text-xl md:text-2xl font-bold tracking-[0.2em] text-tdnm-main">背景</h2>
-                    </div>
-
-                    <div class="lg:col-span-8 space-y-8 text-sm md:text-base text-tdnm-text leading-[2.2] tracking-[0.15em] font-light" data-aos="fade-left">
-                        <p>
-                            仏教の精神に触れながら育ち、<br>
-                            「静かな芯」を大切にして生きてきました。
-                        </p>
-                        <div class="py-4">
-                            <span class="font-sans text-xl md:text-2xl font-light tracking-[0.15em] text-tdnm-accent block">everything flows</span>
-                            <span class="text-xs text-tdnm-main/70 block">すべては流れ、変わり続ける。</span>
-                        </div>
-                        <p>
-                            その感覚を信じながら、ゆるく、でも、まっすぐに生きてきた人生。子育ても、仕事も、ものづくりも、コントロールしすぎない。
-                        </p>
-                        <p>
-                            管理するより、それぞれの流れを信じる。その人自身が持つ力を、ちゃんと尊重する。TDNMのスタンスは、そんな人生観から生まれています。
-                        </p>
-                        <p class="font-normal text-tdnm-main pt-4 border-t border-tdnm-line/60">
-                            私たちは、“正解を押しつける”ためではなく、その人の中に、すでにある想いや価値を、一緒に見つけ、整え、社会へ届けるために存在しています。
-                        </p>
+                <div class="work-image-box fade-in">
+                    <div class="svg-container">
+                        <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="400" height="480" fill="#Fdfbf7"/>
+                            <path d="M 50,400 C 150,380 200,450 350,420" fill="none" stroke="#D8B58A" stroke-width="1.5"/>
+                            <path d="M 30,415 C 130,395 210,460 370,430" fill="none" stroke="#D8B58A" stroke-width="0.5"/>
+                            <text x="40" y="80" font-family="'Montserrat', sans-serif" font-weight="300" font-size="12" fill="#8C6A3D" letter-spacing="4">EVERYTHING FLOWS</text>
+                            <circle cx="200" cy="240" r="70" fill="none" stroke="#4A3A2A" stroke-width="0.5" stroke-dasharray="2, 4"/>
+                            <circle cx="210" cy="235" r="55" fill="#4A3A2A" opacity="0.03"/>
+                            <circle cx="190" cy="250" r="60" fill="#8C6A3D" opacity="0.02"/>
+                        </svg>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-
-        <section id="contact" class="w-full py-24 md:py-36 px-6 md:px-12 text-center bg-white/10">
-            <div class="max-w-2xl mx-auto space-y-12" data-aos="zoom-in">
-                <div class="space-y-2">
-                    <span class="font-sans text-[10px] uppercase tracking-[0.3em] text-tdnm-accent">Contact</span>
-                    <h2 class="text-xl md:text-2xl font-bold tracking-[0.2em] text-tdnm-main">お問い合わせ</h2>
-                </div>
-
-                <div class="text-sm md:text-base text-tdnm-text leading-[2] tracking-[0.15em] font-light space-y-3">
-                    <p>まだ言葉になっていない想いでも構いません。</p>
-                    <p>流れの途中の構想でも、まとまっていない相談でも大丈夫です。</p>
-                    <p class="text-tdnm-main font-normal">「なんとなく、こうしたい気がする」</p>
-                    <p>その感覚から、一緒に整理していきましょう。</p>
-                </div>
-
-                <div class="pt-8">
-                    <p class="text-xs text-tdnm-accent tracking-widest mb-6">想いを整理するところから、はじめませんか。</p>
-                    <a href="mailto:info@tdnm.jp" class="inline-block border border-tdnm-main text-tdnm-main text-xs font-sans tracking-[0.3em] px-12 py-4 hover:bg-tdnm-main hover:text-white transition-all duration-500 bg-transparent">
-                        ENTER INQUIRY
-                    </a>
-                </div>
+    <section id="story">
+        <div class="container">
+            <div class="story-content fade-in">
+                <span class="en-title">Story</span>
+                <h2 class="section-title">背景</h2>
+                <p>仏教の精神に触れながら育ち、「静かな芯」を大切にして生きてきました。</p>
+                <p>everything flows ―― すべては流れ、変わり続ける。<br>その感覚を信じながら、ゆるく、ベースはまっすぐに生きてきた人生。</p>
+                <p>子育ても、仕事も、ものづくりも、コントロールしすぎない。管理するより、それぞれの流れを信じる。その人自身が持つ力を、ちゃんと尊重する。TDNMのスタンスは、そんな人生観から生まれています。</p>
+                <p>私たちは、“正解を押しつける”ためではなく、その人の中に、すでにある想いや価値を、一緒に見つけ、整え、社会へ届けるために存在しています。</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-    </main>
+    <section id="contact">
+        <div class="container">
+            <div class="contact-box fade-in">
+                <span class="en-title">Contact</span>
+                <h2 class="section-title">お問い合わせ</h2>
+                <p>まだ言葉になっていない想いでも構いません。<br>流れの途中の構想でも、まとまっていない相談でも大丈夫です。<br>「なんとなく、こうしたい気がする」<br>その感覚から、一緒に整理していきましょう。</p>
+                <div class="contact-cta">想いを整理するところから、はじめませんか。</div>
+                <a href="mailto:hello@tdnm.design" class="btn-contact">お問い合わせ</a>
+            </div>
+        </div>
+    </section>
 
-
-    <footer class="w-full bg-tdnm-bg border-t border-tdnm-line py-16 px-6 md:px-12 relative z-10 mix-blend-multiply">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-6 items-start">
-            
-            <div class="md:col-span-6 space-y-4">
-                <div class="space-y-1">
-                    <span class="font-sans font-light text-2xl tracking-[0.2em] text-tdnm-main block">TDNM</span>
-                    <span class="font-sans text-[9px] tracking-[0.2em] text-tdnm-accent uppercase block">Everything Flows</span>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2>TDNM</h2>
+                    <div class="tagline">Everything Flows</div>
                 </div>
-                <p class="text-[11px] text-tdnm-text/70 tracking-widest leading-relaxed">
+                <div class="footer-info">
                     運営：TDNM<br>
                     所在地：埼玉県三郷市<br>
                     個人事業主届出済
-                </p>
+                </div>
             </div>
-
-            <div class="md:col-span-6 md:text-right md:self-end space-y-2">
-                <p class="text-[10px] font-sans tracking-[0.1em] text-tdnm-main/50">© 2026 TDNM All Rights Reserved.</p>
+            <div class="copyright">
+                &copy; 2026 TDNM All Rights Reserved.
             </div>
         </div>
     </footer>
 
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            if (typeof AOS !== 'undefined') {
-                AOS.init({
-                    once: true,      /* スクロールを戻した時に何度も動かさず、静けさを保つ */
-                    offset: 80,
-                    duration: 1000,  /* じわっと入るスローモーション演出 */
-                    easing: 'ease-out-cubic'
+        document.addEventListener("DOMContentLoaded", function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observerOptions = {
+                root: null,
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
                 });
-            }
+            }, observerOptions);
+
+            fadeElements.forEach(el => {
+                observer.observe(el);
+            });
         });
     </script>
 </body>
