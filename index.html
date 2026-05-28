@@ -17,12 +17,16 @@
 
         :root {
             --bg-color: #F5F1EB;
-            --main-color: #4A3A2A;
-            --main-text: #2F4F3A;
-            --accent-color: #8C6A3D;
-            --sub-color: #D8B58A;
+            --main-color: #3A2E22; /* より存在感を出すために、薄い茶から「深い焦げ茶・墨色」へ引き締め */
+            --main-text: #1C3324;  /* テキストの薄さを改善するため、深いモスグリーンをさらに濃く調整 */
+            --accent-color: #7A582B; /* ゴールド・ブラウンのアクセントも視認性を向上 */
+            --sub-color: #C29D70;
             --font-en: 'Montserrat', sans-serif;
             --font-ja: 'Noto Serif JP', serif;
+        }
+
+        html {
+            scroll-behavior: smooth; /* ヘッダーリンクをクリックしたときに心地よくスーッとスクロール */
         }
 
         body {
@@ -30,8 +34,8 @@
             color: var(--main-text);
             font-family: var(--font-ja);
             font-size: 15px;
-            line-height: 1.8;
-            letter-spacing: 0.05em;
+            line-height: 1.9;
+            letter-spacing: 0.06em;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
@@ -44,13 +48,13 @@
         }
 
         section {
-            padding: 120px 0;
+            padding: 130px 0;
             position: relative;
         }
 
         .fade-in {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(25px);
             transition: opacity 1.4s ease, transform 1.4s ease;
         }
 
@@ -62,45 +66,94 @@
         /* --- Typography --- */
         .en-title {
             font-family: var(--font-en);
-            font-weight: 300;
+            font-weight: 400; /* 少し太くして存在感を付与 */
             text-transform: uppercase;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.25em;
             color: var(--accent-color);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            display: block;
         }
 
         .section-title {
-            font-size: 1.8rem;
-            font-weight: 400;
+            font-size: 1.9rem;
+            font-weight: 600; /* 芯のある強さを出すためウェイトをアップ */
             color: var(--main-color);
-            margin-bottom: 50px;
+            margin-bottom: 55px;
             position: relative;
             display: inline-block;
+            letter-spacing: 0.1em;
         }
 
-        /* --- Header --- */
+        /* --- Header (各セクションへのリンク追加 ＆ 文字の存在感強化) --- */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 30px 40px;
+            padding: 25px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(245, 241, 235, 0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(245, 241, 235, 0.92); /* 背景の白みを少し強めて文字の背景を安定化 */
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(74, 58, 42, 0.02);
         }
 
         .logo {
             font-family: var(--font-en);
-            font-weight: 400;
-            font-size: 1.5rem;
+            font-weight: 500;
+            font-size: 1.6rem;
             letter-spacing: 0.15em;
             color: var(--main-color);
             text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        .logo:hover {
+            opacity: 0.7;
+        }
+
+        .header-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .header-nav a {
+            font-family: var(--font-en);
+            font-weight: 500; /* 薄さを解消するためフォントをやや太めに */
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--main-color); /* 存在感のある深い色へ変更 */
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .header-nav a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transform-origin: bottom right;
+            transition: transform 0.4s ease-out;
+        }
+
+        .header-nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .header-nav a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
         }
 
         /* --- Hero Section --- */
@@ -112,34 +165,34 @@
             text-align: center;
             padding-top: 100px;
             overflow: hidden;
-            background: linear-gradient(rgba(245, 241, 235, 0.4), rgba(245, 241, 235, 0.4)), 
+            background: linear-gradient(rgba(245, 241, 235, 0.35), rgba(245, 241, 235, 0.35)), 
                         url('https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&q=80&w=1600') no-repeat center center;
             background-size: cover;
         }
 
         .hero-content {
-            max-width: 800px;
+            max-width: 850px;
             z-index: 2;
-            background: rgba(245, 241, 235, 0.6);
-            padding: 40px 60px;
-            backdrop-filter: blur(4px);
-            border-radius: 2px;
+            background: rgba(245, 241, 235, 0.75);
+            padding: 50px 70px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(194, 157, 112, 0.15);
         }
 
         .hero-brand {
             font-family: var(--font-en);
-            font-size: 4.5rem;
+            font-size: 4.8rem;
             font-weight: 300;
             letter-spacing: 0.3em;
             color: var(--main-color);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             line-height: 1;
             padding-left: 0.3em;
         }
 
         .hero-tagline {
             font-family: var(--font-en);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 400;
             letter-spacing: 0.4em;
             color: var(--accent-color);
@@ -148,18 +201,18 @@
         }
 
         .hero-main-copy {
-            font-size: 2rem;
+            font-size: 2.1rem;
             font-weight: 400;
-            line-height: 2;
+            line-height: 2.1;
             color: var(--main-color);
             margin-bottom: 40px;
         }
 
         .hero-sub-copy {
-            font-size: 1rem;
-            line-height: 2.2;
+            font-size: 1.05rem;
+            line-height: 2.3;
             color: var(--main-text);
-            font-weight: 300;
+            font-weight: 400; /* しっかり読めるように調整 */
         }
 
         .scroll-down {
@@ -182,22 +235,22 @@
             100% { transform: translate(-50%, 0); opacity: 0.3; }
         }
 
-        /* --- Philosophy Section --- */
+        /* --- Philosophy Section (木漏れ日の揺らぎ写真へ完全修正) --- */
         #philosophy {
-            background-color: #Fdfbf7;
+            background-color: #FCFAF6;
         }
 
         .philosophy-layout {
             display: flex;
             align-items: center;
-            gap: 80px;
+            gap: 90px;
         }
 
         .philosophy-text {
             flex: 1.1;
-            font-size: 1.05rem;
-            line-height: 2.3;
-            font-weight: 300;
+            font-size: 1.1rem;
+            line-height: 2.4;
+            font-weight: 400; /* 文字の存在感をアップ */
         }
 
         .philosophy-text p {
@@ -212,7 +265,8 @@
             flex: 0.9;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(74, 58, 42, 0.05);
+            box-shadow: 0 20px 40px rgba(58, 46, 34, 0.04);
+            border: 1px solid rgba(194, 157, 112, 0.1);
         }
 
         .image-frame img {
@@ -220,85 +274,93 @@
             height: auto;
             display: block;
             object-fit: cover;
-            transition: transform 1.2s ease;
+            transition: transform 1.5s ease;
         }
 
         .image-frame:hover img {
-            transform: scale(1.03);
+            transform: scale(1.04);
         }
 
         /* --- Our Stance Section --- */
+        #stance {
+            background-color: var(--bg-color);
+        }
+
         .stance-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-top: 20px;
+            gap: 45px;
+            margin-top: 25px;
         }
 
         .stance-card {
-            background: #Fdfbf7;
-            padding: 50px 40px;
-            border-left: 1px solid var(--sub-color);
-            transition: transform 0.5s ease;
+            background: #FCFAF6;
+            padding: 55px 45px;
+            border-left: 2px solid var(--sub-color);
+            box-shadow: 0 10px 30px rgba(74, 58, 42, 0.01);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
 
         .stance-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(74, 58, 42, 0.04);
         }
 
         .stance-card h3 {
             font-family: var(--font-en);
-            font-size: 1.4rem;
-            font-weight: 300;
+            font-size: 1.5rem;
+            font-weight: 400;
             color: var(--main-color);
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             letter-spacing: 0.1em;
         }
 
         .stance-card .stance-ja {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--accent-color);
             margin-bottom: 30px;
-            font-weight: 400;
+            font-weight: 600; /* くっきり強調 */
         }
 
         .stance-card p {
-            font-size: 0.95rem;
-            line-height: 2;
-            font-weight: 300;
+            font-size: 1rem;
+            line-height: 2.1;
+            font-weight: 400;
         }
 
         /* --- What We Do Section --- */
         #what-we-do {
-            background-color: #Fdfbf7;
+            background-color: #FCFAF6;
         }
 
         .section-intro {
-            font-size: 1.2rem;
-            line-height: 2;
-            margin-bottom: 60px;
-            max-width: 700px;
+            font-size: 1.25rem;
+            line-height: 2.1;
+            margin-bottom: 70px;
+            max-width: 800px;
             color: var(--main-color);
+            font-weight: 400;
         }
 
         .services-list {
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 45px;
         }
 
         .service-item {
             display: flex;
-            border-bottom: 1px solid rgba(74, 58, 42, 0.1);
-            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(74, 58, 42, 0.12);
+            padding-bottom: 45px;
         }
 
         .service-num {
             font-family: var(--font-en);
-            font-size: 1.2rem;
-            font-weight: 300;
+            font-size: 1.3rem;
+            font-weight: 400;
             color: var(--sub-color);
-            width: 80px;
+            width: 90px;
+            padding-top: 2px;
         }
 
         .service-body {
@@ -309,38 +371,48 @@
         }
 
         .service-body h3 {
-            font-size: 1.25rem;
-            font-weight: 400;
+            font-size: 1.35rem;
+            font-weight: 600; /* タイトルを太く */
             color: var(--main-color);
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .service-body p {
-            font-size: 0.95rem;
-            line-height: 1.9;
-            font-weight: 300;
+            font-size: 1rem;
+            line-height: 2;
+            font-weight: 400;
         }
 
         /* --- How We Work Section --- */
+        #how-we-work {
+            background-color: var(--bg-color);
+        }
+
         .work-layout {
             display: flex;
-            gap: 80px;
+            gap: 90px;
             align-items: center;
         }
 
         .work-text {
             flex: 1.1;
-            font-size: 1.05rem;
-            line-height: 2.2;
-            font-weight: 300;
+            font-size: 1.1rem;
+            line-height: 2.3;
+            font-weight: 400;
+        }
+        .work-text p {
+            margin-bottom: 1.8rem;
+        }
+        .work-text p:last-child {
+            margin-bottom: 0;
         }
 
         /* --- Story Section --- */
         #story {
             background-color: var(--main-color);
             color: #F5F1EB;
-            padding: 140px 0;
-            background: linear-gradient(rgba(74, 58, 42, 0.85), rgba(74, 58, 42, 0.85)), 
+            padding: 150px 0;
+            background: linear-gradient(rgba(58, 46, 34, 0.88), rgba(58, 46, 34, 0.88)), 
                         url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1600') no-repeat center center;
             background-size: cover;
             background-attachment: fixed;
@@ -351,15 +423,16 @@
         }
 
         .story-content {
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
-            font-size: 1.05rem;
-            line-height: 2.4;
-            font-weight: 300;
+            font-size: 1.1rem;
+            line-height: 2.5;
+            font-weight: 400;
             text-align: justify;
-            background: rgba(74, 58, 42, 0.6);
-            padding: 50px 60px;
+            background: rgba(58, 46, 34, 0.4);
+            padding: 55px 70px;
             backdrop-filter: blur(4px);
+            border: 1px solid rgba(245, 241, 235, 0.1);
         }
 
         .story-content p {
@@ -373,40 +446,40 @@
         /* --- Contact Section --- */
         #contact {
             text-align: center;
-            background: linear-gradient(to bottom, #Fdfbf7, var(--bg-color));
-            padding: 120px 0;
+            background: linear-gradient(to bottom, #FCFAF6, var(--bg-color));
+            padding: 130px 0;
         }
 
         .contact-box {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
         }
 
         .contact-box p {
-            font-size: 1rem;
-            line-height: 2;
-            margin-bottom: 40px;
-            font-weight: 300;
+            font-size: 1.05rem;
+            line-height: 2.1;
+            margin-bottom: 45px;
+            font-weight: 400;
         }
 
         .contact-cta {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: var(--main-color);
-            margin-bottom: 40px;
-            font-weight: 400;
+            margin-bottom: 45px;
+            font-weight: 600;
         }
 
         .btn-contact {
             display: inline-block;
             font-family: var(--font-en);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             letter-spacing: 0.2em;
             color: #F5F1EB;
             background-color: var(--main-color);
-            padding: 18px 60px;
+            padding: 20px 65px;
             text-decoration: none;
             text-transform: uppercase;
-            transition: background-color 0.3s, transform 0.3s;
+            transition: background-color 0.3s, transform 0.3s, color 0.3s;
             border: 1px solid var(--main-color);
         }
 
@@ -414,15 +487,16 @@
             background-color: transparent;
             color: var(--main-color);
             transform: translateY(-2px);
+            font-weight: 600;
         }
 
         /* --- Footer --- */
         footer {
-            background-color: #ECE7E1;
-            padding: 60px 0;
+            background-color: #EAE4DC;
+            padding: 70px 0;
             color: var(--main-color);
-            font-size: 0.85rem;
-            font-weight: 300;
+            font-size: 0.9rem;
+            font-weight: 400;
         }
 
         .footer-grid {
@@ -430,20 +504,20 @@
             grid-template-columns: 1.5fr 1fr;
             gap: 40px;
             align-items: flex-start;
-            margin-bottom: 40px;
+            margin-bottom: 45px;
         }
 
         .footer-brand h2 {
             font-family: var(--font-en);
             font-weight: 400;
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             letter-spacing: 0.15em;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
         .footer-brand .tagline {
             font-family: var(--font-en);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             letter-spacing: 0.3em;
             color: var(--accent-color);
             text-transform: uppercase;
@@ -451,30 +525,38 @@
 
         .footer-info {
             text-align: right;
-            line-height: 2;
+            line-height: 2.1;
         }
 
         .copyright {
-            border-top: 1px solid rgba(74, 58, 42, 0.1);
-            padding-top: 20px;
-            font-size: 0.75rem;
+            border-top: 1px solid rgba(74, 58, 42, 0.15);
+            padding-top: 25px;
+            font-size: 0.8rem;
             font-family: var(--font-en);
             letter-spacing: 0.05em;
-            color: rgba(47, 79, 58, 0.7);
+            color: rgba(28, 51, 36, 0.7);
         }
 
         /* --- Responsive Style --- */
         @media (max-width: 968px) {
+            header {
+                padding: 20px 30px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .header-nav ul {
+                gap: 20px;
+            }
             .philosophy-layout, .work-layout {
                 flex-direction: column;
-                gap: 40px;
+                gap: 45px;
             }
             .image-frame {
                 width: 100%;
             }
             .stance-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 25px;
             }
             .service-body {
                 grid-template-columns: 1fr;
@@ -482,22 +564,22 @@
             }
             .footer-grid {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 35px;
             }
             .footer-info {
                 text-align: left;
             }
             .hero-brand {
-                font-size: 3rem;
+                font-size: 3.2rem;
             }
             .hero-main-copy {
-                font-size: 1.5rem;
+                font-size: 1.6rem;
             }
             .hero-content, .story-content {
-                padding: 30px 25px;
+                padding: 35px 25px;
             }
             section {
-                padding: 80px 0;
+                padding: 90px 0;
             }
         }
     </style>
@@ -506,6 +588,16 @@
 
     <header>
         <a href="#" class="logo">TDNM</a>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="#philosophy">Philosophy</a></li>
+                <li><a href="#stance">Stance</a></li>
+                <li><a href="#what-we-do">What We Do</a></li>
+                <li><a href="#how-we-work">How We Work</a></li>
+                <li><a href="#story">Story</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
     <section id="hero">
@@ -521,7 +613,7 @@
                 その奥にある「本質」から整えていく。<br>
                 変わり続ける時代の中で、流れに逆らわず、<br>
                 でも、自分の芯は見失わない。<br><br>
-                徒然なるままに。ゆるく、ベースはまっすぐに。
+                徒然なるままに。。。
             </div>
         </div>
         <div class="scroll-down">scroll</div>
@@ -533,13 +625,13 @@
                 <div class="philosophy-text fade-in">
                     <span class="en-title">Philosophy</span>
                     <h2 class="section-title">思想</h2>
-                    <p>世界は、ずっと流れ続けている。<br>人も、働き方も、価値観も、少しずつ形を変えていく。</p>
+                    <p>世界は、ずっと流れ続けている。<br>人も、働き方も、価値観も、少しずつ形を変えてしていく。</p>
                     <p>変わることは、失うことじゃない。<br>流れの中で削ぎ落とされながら、本当に大切なものだけが残っていく。</p>
-                    <p>TDNMは、「徒然なるままに」という感覚を大切にしながら、無理をせず、でも、誤魔化さず、自分たちらしいスタンスで創ることを選び続けています。</p>
+                    <p>TDNMは、自分の感覚を大切にしながら、無理をせず、でも、誤魔化さず、自分たちらしいスタンスで創ることを選び続けています。</p>
                     <p>整えることは、飾ることではなく、本質を見つけること。<br>ゆるく、生きる。でも、芯はまっすぐに。</p>
                 </div>
                 <div class="image-frame fade-in">
-                    <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800" alt="Dappled light and natural texture">
+                    <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=80&w=800" alt="Beautiful dapple light and soft leaf shadows on a neutral wall">
                 </div>
             </div>
         </div>
@@ -639,7 +731,7 @@
             <div class="story-content fade-in">
                 <span class="en-title">Story</span>
                 <h2 class="section-title">背景</h2>
-                <p>仏教の精神に触れながら育ち、「静かな芯」を大切にして生きてきました。</p>
+                <p>仏教の精神に触れながら育ち、「静かな芯」を大切にしてきました。</p>
                 <p>everything flows ―― すべては流れ、変わり続ける。</p>
                 <p>その感覚をもちながらも、ゆるく、自分らしく、まっすぐに生きてきた人生。</p>
                 <p>子育ても、仕事も、ものづくりも、コントロールしすぎない。管理するより、それぞれの流れを信じる。その人自身が持つ力を、ちゃんと尊重する。TDNMのスタンスは、そんな人生観から生まれています。</p>
@@ -655,7 +747,7 @@
                 <h2 class="section-title">お問い合わせ</h2>
                 <p>まだ言葉になっていない想いでも構いません。<br>流れの途中の構想でも、まとまっていない相談でも大丈夫です。<br>「なんとなく、こうしたい気がする」<br>その感覚から、一緒に整理していきましょう。</p>
                 <div class="contact-cta">想いを整理するところから、はじめませんか。</div>
-                <a href="mailto:hello@tdnm.design" class="btn-contact">□お問い合わせ□</a>
+                <a href="mailto:hello@tdnm.design" class="btn-contact">お問い合わせ</a>
             </div>
         </div>
     </section>
