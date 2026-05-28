@@ -1,799 +1,1266 @@
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TDNM | EVERYTHING FLOWS</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        /* --- Reset & Base Styles --- */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        :root {
-            --bg-color: #F5F1EB;
-            --main-color: #3A2E22; /* より存在感を出すために、薄い茶から「深い焦げ茶・墨色」へ引き締め */
-            --main-text: #1C3324;  /* テキストの薄さを改善するため、深いモスグリーンをさらに濃く調整 */
-            --accent-color: #7A582B; /* ゴールド・ブラウンのアクセントも視認性を向上 */
-            --sub-color: #C29D70;
-            --font-en: 'Montserrat', sans-serif;
-            --font-ja: 'Noto Serif JP', serif;
-        }
-
-        html {
-            scroll-behavior: smooth; /* ヘッダーリンクをクリックしたときに心地よくスーッとスクロール */
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--main-text);
-            font-family: var(--font-ja);
-            font-size: 15px;
-            line-height: 1.9;
-            letter-spacing: 0.06em;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* --- Layout & Utilities --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 40px;
-        }
-
-        section {
-            padding: 130px 0;
-            position: relative;
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(25px);
-            transition: opacity 1.4s ease, transform 1.4s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- Typography --- */
-        .en-title {
-            font-family: var(--font-en);
-            font-weight: 400; /* 少し太くして存在感を付与 */
-            text-transform: uppercase;
-            letter-spacing: 0.25em;
-            color: var(--accent-color);
-            font-size: 0.95rem;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .section-title {
-            font-size: 1.9rem;
-            font-weight: 600; /* 芯のある強さを出すためウェイトをアップ */
-            color: var(--main-color);
-            margin-bottom: 55px;
-            position: relative;
-            display: inline-block;
-            letter-spacing: 0.1em;
-        }
-
-        /* --- Header (各セクションへのリンク追加 ＆ 文字の存在感強化) --- */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 25px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: rgba(245, 241, 235, 0.92); /* 背景の白みを少し強めて文字の背景を安定化 */
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(74, 58, 42, 0.02);
-        }
-
-        .logo {
-            font-family: var(--font-en);
-            font-weight: 500;
-            font-size: 1.6rem;
-            letter-spacing: 0.15em;
-            color: var(--main-color);
-            text-decoration: none;
-            transition: opacity 0.3s;
-        }
-        .logo:hover {
-            opacity: 0.7;
-        }
-
-        .header-nav ul {
-            display: flex;
-            list-style: none;
-            gap: 35px;
-            align-items: center;
-        }
-
-        .header-nav a {
-            font-family: var(--font-en);
-            font-weight: 500; /* 薄さを解消するためフォントをやや太めに */
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--main-color); /* 存在感のある深い色へ変更 */
-            text-decoration: none;
-            position: relative;
-            padding-bottom: 4px;
-            transition: color 0.3s ease;
-        }
-
-        .header-nav a::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            transform: scaleX(0);
-            height: 1px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--accent-color);
-            transform-origin: bottom right;
-            transition: transform 0.4s ease-out;
-        }
-
-        .header-nav a:hover {
-            color: var(--accent-color);
-        }
-
-        .header-nav a:hover::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-        }
-
-        /* --- Hero Section (コンセプトボードの水面のテクスチャを意識した洗練された画像へ変更) --- */
-        #hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding-top: 100px;
-            overflow: hidden;
-            background: linear-gradient(rgba(245, 241, 235, 0.25), rgba(245, 241, 235, 0.25)), 
-                        url('https://images.unsplash.com/photo-1558244463-54972e2cf6fb?auto=format&fit=crop&q=80&w=1600') no-repeat center center;
-            background-size: cover;
-        }
-
-        .hero-content {
-            max-width: 850px;
-            z-index: 2;
-            background: rgba(245, 241, 235, 0.75);
-            padding: 50px 70px;
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(194, 157, 112, 0.15);
-        }
-
-        .hero-brand {
-            font-family: var(--font-en);
-            font-size: 4.8rem;
-            font-weight: 300;
-            letter-spacing: 0.3em;
-            color: var(--main-color);
-            margin-bottom: 12px;
-            line-height: 1;
-            padding-left: 0.3em;
-        }
-
-        .hero-tagline {
-            font-family: var(--font-en);
-            font-size: 0.9rem;
-            font-weight: 400;
-            letter-spacing: 0.4em;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            margin-bottom: 50px;
-        }
-
-        .hero-main-copy {
-            font-size: 2.1rem;
-            font-weight: 400;
-            line-height: 2.1;
-            color: var(--main-color);
-            margin-bottom: 40px;
-        }
-
-        .hero-sub-copy {
-            font-size: 1.05rem;
-            line-height: 2.3;
-            color: var(--main-text);
-            font-weight: 400; /* しっかり読めるように調整 */
-        }
-
-        .scroll-down {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: var(--font-en);
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            color: var(--main-color);
-            text-transform: uppercase;
-            writing-mode: vertical-lr;
-            animation: pulse 2.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: translate(-50%, 0); opacity: 0.3; }
-            50% { transform: translate(-50%, 10px); opacity: 1; }
-            100% { transform: translate(-50%, 0); opacity: 0.3; }
-        }
-
-        /* --- Philosophy Section (木漏れ日の揺らぎ写真へ完全修正) --- */
-        #philosophy {
-            background-color: #FCFAF6;
-        }
-
-        .philosophy-layout {
-            display: flex;
-            align-items: center;
-            gap: 90px;
-        }
-
-        .philosophy-text {
-            flex: 1.1;
-            font-size: 1.1rem;
-            line-height: 2.4;
-            font-weight: 400; /* 文字の存在感をアップ */
-        }
-
-        .philosophy-text p {
-            margin-bottom: 2rem;
-        }
-
-        .philosophy-text p:last-child {
-            margin-bottom: 0;
-        }
-
-        .image-frame {
-            flex: 0.9;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(58, 46, 34, 0.04);
-            border: 1px solid rgba(194, 157, 112, 0.1);
-        }
-
-        .image-frame img {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-            transition: transform 1.5s ease;
-        }
-
-        .image-frame:hover img {
-            transform: scale(1.04);
-        }
-
-        /* --- Our Stance Section --- */
-        #stance {
-            background-color: var(--bg-color);
-        }
-
-        .stance-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 45px;
-            margin-top: 25px;
-        }
-
-        .stance-card {
-            background: #FCFAF6;
-            padding: 55px 45px;
-            border-left: 2px solid var(--sub-color);
-            box-shadow: 0 10px 30px rgba(74, 58, 42, 0.01);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .stance-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 15px 35px rgba(74, 58, 42, 0.04);
-        }
-
-        .stance-card h3 {
-            font-family: var(--font-en);
-            font-size: 1.5rem;
-            font-weight: 400;
-            color: var(--main-color);
-            margin-bottom: 6px;
-            letter-spacing: 0.1em;
-        }
-
-        .stance-card .stance-ja {
-            font-size: 0.95rem;
-            color: var(--accent-color);
-            margin-bottom: 30px;
-            font-weight: 600; /* くっきり強調 */
-        }
-
-        .stance-card p {
-            font-size: 1rem;
-            line-height: 2.1;
-            font-weight: 400;
-        }
-
-        /* --- What We Do Section --- */
-        #what-we-do {
-            background-color: #FCFAF6;
-        }
-
-        .section-intro {
-            font-size: 1.25rem;
-            line-height: 2.1;
-            margin-bottom: 70px;
-            max-width: 800px;
-            color: var(--main-color);
-            font-weight: 400;
-        }
-
-        .services-list {
-            display: flex;
-            flex-direction: column;
-            gap: 45px;
-        }
-
-        .service-item {
-            display: flex;
-            border-bottom: 1px solid rgba(74, 58, 42, 0.12);
-            padding-bottom: 45px;
-        }
-
-        .service-num {
-            font-family: var(--font-en);
-            font-size: 1.3rem;
-            font-weight: 400;
-            color: var(--sub-color);
-            width: 90px;
-            padding-top: 2px;
-        }
-
-        .service-body {
-            flex: 1;
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-        }
-
-        .service-body h3 {
-            font-size: 1.35rem;
-            font-weight: 600; /* タイトルを太く */
-            color: var(--main-color);
-            line-height: 1.5;
-        }
-
-        .service-body p {
-            font-size: 1rem;
-            line-height: 2;
-            font-weight: 400;
-        }
-
-        /* --- How We Work Section (削ぎ落とされた本質、ナチュラルで静かなワークスペース写真へ変更) --- */
-        #how-we-work {
-            background-color: var(--bg-color);
-        }
-
-        .work-layout {
-            display: flex;
-            gap: 90px;
-            align-items: center;
-        }
-
-        .work-text {
-            flex: 1.1;
-            font-size: 1.1rem;
-            line-height: 2.3;
-            font-weight: 400;
-        }
-        .work-text p {
-            margin-bottom: 1.8rem;
-        }
-        .work-text p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* --- Story Section (Everything Flows: すべては流れ、変わり続ける、を象徴する静かな海の写真へ変更) --- */
-        #story {
-            background-color: var(--main-color);
-            color: #F5F1EB;
-            padding: 150px 0;
-            background: linear-gradient(rgba(58, 46, 34, 0.85), rgba(58, 46, 34, 0.85)), 
-                        url('https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&q=80&w=1600') no-repeat center center;
-            background-size: cover;
-            background-attachment: fixed;
-        }
-
-        #story .section-title, #story .en-title {
-            color: #F5F1EB;
-        }
-
-        .story-content {
-            max-width: 850px;
-            margin: 0 auto;
-            font-size: 1.1rem;
-            line-height: 2.5;
-            font-weight: 400;
-            text-align: justify;
-            background: rgba(58, 46, 34, 0.4);
-            padding: 55px 70px;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(245, 241, 235, 0.1);
-        }
-
-        .story-content p {
-            margin-bottom: 2rem;
-        }
-
-        .story-content p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* --- Contact Section --- */
-        #contact {
-            text-align: center;
-            background: linear-gradient(to bottom, #FCFAF6, var(--bg-color));
-            padding: 130px 0;
-        }
-
-        .contact-box {
-            max-width: 650px;
-            margin: 0 auto;
-        }
-
-        .contact-box p {
-            font-size: 1.05rem;
-            line-height: 2.1;
-            margin-bottom: 45px;
-            font-weight: 400;
-        }
-
-        .contact-cta {
-            font-size: 1.25rem;
-            color: var(--main-color);
-            margin-bottom: 45px;
-            font-weight: 600;
-        }
-
-        .btn-contact {
-            display: inline-block;
-            font-family: var(--font-en);
-            font-size: 0.95rem;
-            letter-spacing: 0.2em;
-            color: #F5F1EB;
-            background-color: var(--main-color);
-            padding: 20px 65px;
-            text-decoration: none;
-            text-transform: uppercase;
-            transition: background-color 0.3s, transform 0.3s, color 0.3s;
-            border: 1px solid var(--main-color);
-        }
-
-        .btn-contact:hover {
-            background-color: transparent;
-            color: var(--main-color);
-            transform: translateY(-2px);
-            font-weight: 600;
-        }
-
-        /* --- Footer --- */
-        footer {
-            background-color: #EAE4DC;
-            padding: 70px 0;
-            color: var(--main-color);
-            font-size: 0.9rem;
-            font-weight: 400;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 40px;
-            align-items: flex-start;
-            margin-bottom: 45px;
-        }
-
-        .footer-brand h2 {
-            font-family: var(--font-en);
-            font-weight: 400;
-            font-size: 1.7rem;
-            letter-spacing: 0.15em;
-            margin-bottom: 6px;
-        }
-
-        .footer-brand .tagline {
-            font-family: var(--font-en);
-            font-size: 0.8rem;
-            letter-spacing: 0.3em;
-            color: var(--accent-color);
-            text-transform: uppercase;
-        }
-
-        .footer-info {
-            text-align: right;
-            line-height: 2.1;
-        }
-
-        .copyright {
-            border-top: 1px solid rgba(74, 58, 42, 0.15);
-            padding-top: 25px;
-            font-size: 0.8rem;
-            font-family: var(--font-en);
-            letter-spacing: 0.05em;
-            color: rgba(28, 51, 36, 0.7);
-        }
-
-        /* --- Responsive Style --- */
-        @media (max-width: 968px) {
-            header {
-                padding: 20px 30px;
-                flex-direction: column;
-                gap: 15px;
-            }
-            .header-nav ul {
-                gap: 20px;
-            }
-            .philosophy-layout, .work-layout {
-                flex-direction: column;
-                gap: 45px;
-            }
-            .image-frame {
-                width: 100%;
-            }
-            .stance-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-            .service-body {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 35px;
-            }
-            .footer-info {
-                text-align: left;
-            }
-            .hero-brand {
-                font-size: 3.2rem;
-            }
-            .hero-main-copy {
-                font-size: 1.6rem;
-            }
-            .hero-content, .story-content {
-                padding: 35px 25px;
-            }
-            section {
-                padding: 90px 0;
-            }
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>TDNM | Everything Flows</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Noto+Serif+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --bg:#F5F1EB;
+    --bg-soft:#FCFAF6;
+
+    --main:#33281F;
+    --text:#2E3A31;
+
+    --accent:#8A6A42;
+    --line:rgba(138,106,66,0.12);
+
+    --font-en:'Montserrat',sans-serif;
+    --font-ja:'Noto Serif JP',serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+
+    font-family:var(--font-ja);
+
+    line-height:2;
+    letter-spacing:0.05em;
+
+    overflow-x:hidden;
+
+    -webkit-font-smoothing:antialiased;
+
+    background-image:
+        radial-gradient(rgba(138,106,66,0.03) 1px, transparent 1px);
+
+    background-size:24px 24px;
+}
+
+.container{
+    width:min(1180px, calc(100% - 80px));
+    margin:auto;
+}
+
+section{
+    padding:160px 0;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+.fade{
+    opacity:0;
+    transform:translateY(30px);
+    transition:1.2s ease;
+}
+
+.fade.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* =========================
+HEADER
+========================= */
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+
+    width:100%;
+
+    z-index:1000;
+
+    padding:24px 48px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:rgba(245,241,235,0.72);
+
+    backdrop-filter:blur(14px);
+
+    border-bottom:1px solid rgba(138,106,66,0.06);
+}
+
+.logo{
+    font-family:var(--font-en);
+
+    font-size:1.5rem;
+    font-weight:400;
+
+    letter-spacing:0.18em;
+
+    text-decoration:none;
+
+    color:var(--main);
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:36px;
+}
+
+nav a{
+    text-decoration:none;
+
+    font-family:var(--font-en);
+
+    font-size:0.78rem;
+    font-weight:500;
+
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+
+    color:var(--main);
+
+    position:relative;
+}
+
+nav a::after{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    bottom:-6px;
+
+    width:100%;
+    height:1px;
+
+    background:var(--accent);
+
+    transform:scaleX(0);
+    transform-origin:right;
+
+    transition:0.4s ease;
+}
+
+nav a:hover::after{
+    transform:scaleX(1);
+    transform-origin:left;
+}
+
+/* =========================
+HERO
+========================= */
+
+#hero{
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            rgba(245,241,235,0.58),
+            rgba(245,241,235,0.58)
+        ),
+        url('./assets/images/hero.png');
+
+    background-size:cover;
+    background-position:center;
+}
+
+#hero::before{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18), transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(255,255,255,0.08), transparent 35%);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+
+    max-width:850px;
+
+    background:rgba(252,250,246,0.55);
+
+    backdrop-filter:blur(10px);
+
+    padding:70px 80px;
+
+    border:1px solid rgba(138,106,66,0.08);
+
+    box-shadow:
+        0 20px 60px rgba(51,40,31,0.04),
+        0 1px 0 rgba(255,255,255,0.4) inset;
+}
+
+.hero-brand{
+    font-family:var(--font-en);
+
+    font-size:5.5rem;
+    font-weight:300;
+
+    letter-spacing:0.28em;
+
+    color:var(--main);
+
+    margin-bottom:16px;
+
+    padding-left:0.28em;
+}
+
+.hero-tagline{
+    font-family:var(--font-en);
+
+    font-size:0.82rem;
+
+    letter-spacing:0.42em;
+
+    text-transform:uppercase;
+
+    color:var(--accent);
+
+    margin-bottom:56px;
+}
+
+.hero-main-copy{
+    font-size:2.2rem;
+
+    line-height:2;
+
+    color:var(--main);
+
+    margin-bottom:36px;
+}
+
+.hero-sub-copy{
+    font-size:1rem;
+
+    line-height:2.5;
+
+    color:rgba(46,58,49,0.88);
+}
+
+.scroll{
+    position:absolute;
+
+    bottom:42px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-family:var(--font-en);
+
+    font-size:0.7rem;
+
+    letter-spacing:0.2em;
+
+    text-transform:uppercase;
+
+    color:var(--main);
+
+    animation:float 2.5s infinite;
+}
+
+@keyframes float{
+    0%{
+        transform:translate(-50%,0);
+        opacity:0.3;
+    }
+
+    50%{
+        transform:translate(-50%,8px);
+        opacity:1;
+    }
+
+    100%{
+        transform:translate(-50%,0);
+        opacity:0.3;
+    }
+}
+
+/* =========================
+COMMON
+========================= */
+
+.en-title{
+    display:block;
+
+    font-family:var(--font-en);
+
+    font-size:0.82rem;
+
+    letter-spacing:0.25em;
+
+    text-transform:uppercase;
+
+    color:var(--accent);
+
+    margin-bottom:14px;
+}
+
+.section-title{
+    font-size:2rem;
+
+    font-weight:600;
+
+    color:var(--main);
+
+    margin-bottom:56px;
+}
+
+.image-frame{
+    overflow:hidden;
+
+    background:#f7f3ed;
+
+    border:1px solid rgba(138,106,66,0.08);
+
+    box-shadow:
+        0 30px 60px rgba(51,40,31,0.05);
+}
+
+.image-frame img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:1.6s ease;
+}
+
+.image-frame:hover img{
+    transform:scale(1.03);
+}
+
+/* =========================
+PHILOSOPHY
+========================= */
+
+#philosophy{
+    background:var(--bg-soft);
+}
+
+.philosophy-layout{
+    display:flex;
+    align-items:center;
+    gap:90px;
+}
+
+.philosophy-text{
+    flex:1.1;
+
+    font-size:1.05rem;
+}
+
+.philosophy-text p{
+    margin-bottom:2rem;
+}
+
+.philosophy-image{
+    flex:0.9;
+}
+
+/* =========================
+STANCE
+========================= */
+
+.stance-grid{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:34px;
+}
+
+.stance-card{
+    background:var(--bg-soft);
+
+    padding:54px 42px;
+
+    border-left:2px solid rgba(138,106,66,0.4);
+
+    transition:0.5s ease;
+}
+
+.stance-card:hover{
+    transform:translateY(-6px);
+}
+
+.stance-card h3{
+    font-family:var(--font-en);
+
+    font-size:1.45rem;
+    font-weight:400;
+
+    color:var(--main);
+
+    margin-bottom:8px;
+}
+
+.stance-ja{
+    color:var(--accent);
+
+    margin-bottom:28px;
+
+    font-size:0.95rem;
+}
+
+.stance-card p{
+    font-size:0.98rem;
+}
+
+/* =========================
+WHAT WE DO
+========================= */
+
+#what{
+    background:var(--bg-soft);
+}
+
+.intro{
+    max-width:760px;
+
+    font-size:1.18rem;
+
+    line-height:2.2;
+
+    color:var(--main);
+
+    margin-bottom:72px;
+}
+
+.services{
+    display:flex;
+    flex-direction:column;
+    gap:44px;
+}
+
+.service{
+    display:flex;
+
+    gap:40px;
+
+    padding-bottom:44px;
+
+    border-bottom:1px solid var(--line);
+}
+
+.service-num{
+    width:60px;
+
+    font-family:var(--font-en);
+
+    color:var(--accent);
+}
+
+.service-body{
+    display:grid;
+
+    grid-template-columns:1fr 2fr;
+
+    gap:36px;
+
+    width:100%;
+}
+
+.service-body h3{
+    font-size:1.3rem;
+
+    color:var(--main);
+
+    line-height:1.7;
+}
+
+.service-body p{
+    font-size:0.98rem;
+}
+
+/* =========================
+WORK
+========================= */
+
+.work-layout{
+    display:flex;
+    align-items:center;
+    gap:90px;
+}
+
+.work-text{
+    flex:1.1;
+}
+
+.work-text p{
+    margin-bottom:1.8rem;
+}
+
+.work-image{
+    flex:0.9;
+}
+
+/* =========================
+STORY
+========================= */
+
+#story{
+    position:relative;
+
+    color:#F5F1EB;
+
+    background:
+        linear-gradient(
+            rgba(40,32,24,0.76),
+            rgba(40,32,24,0.76)
+        ),
+        url('./assets/images/story.png');
+
+    background-size:cover;
+    background-position:center;
+}
+
+.story-box{
+    max-width:840px;
+
+    margin:auto;
+
+    background:rgba(51,40,31,0.35);
+
+    backdrop-filter:blur(4px);
+
+    padding:70px;
+
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.story-box .section-title,
+.story-box .en-title{
+    color:#F5F1EB;
+}
+
+.story-box p{
+    margin-bottom:2rem;
+}
+
+/* =========================
+CONTACT
+========================= */
+
+#contact{
+    text-align:center;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--bg-soft),
+            var(--bg)
+        );
+}
+
+.contact-box{
+    max-width:720px;
+    margin:auto;
+}
+
+.contact-box p{
+    margin-bottom:42px;
+}
+
+.contact-cta{
+    font-size:1.25rem;
+
+    color:var(--main);
+
+    margin-bottom:42px;
+}
+
+.btn{
+    display:inline-block;
+
+    padding:20px 64px;
+
+    background:var(--main);
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-family:var(--font-en);
+
+    font-size:0.82rem;
+
+    letter-spacing:0.2em;
+
+    text-transform:uppercase;
+
+    transition:0.4s ease;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+
+    background:transparent;
+
+    color:var(--main);
+
+    border:1px solid var(--main);
+}
+
+/* =========================
+FOOTER
+========================= */
+
+footer{
+    padding:80px 0;
+
+    background:#ECE6DE;
+}
+
+.footer-grid{
+    display:grid;
+
+    grid-template-columns:1.5fr 1fr;
+
+    gap:40px;
+}
+
+.footer-brand h2{
+    font-family:var(--font-en);
+
+    font-size:1.7rem;
+    font-weight:400;
+
+    letter-spacing:0.15em;
+
+    margin-bottom:6px;
+}
+
+.footer-brand p{
+    font-family:var(--font-en);
+
+    font-size:0.8rem;
+
+    letter-spacing:0.3em;
+
+    color:var(--accent);
+}
+
+.footer-info{
+    text-align:right;
+
+    line-height:2;
+}
+
+.copy{
+    margin-top:40px;
+
+    padding-top:24px;
+
+    border-top:1px solid rgba(51,40,31,0.08);
+
+    font-size:0.8rem;
+
+    font-family:var(--font-en);
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:960px){
+
+    section{
+        padding:110px 0;
+    }
+
+    .container{
+        width:min(100%, calc(100% - 40px));
+    }
+
+    header{
+        padding:18px 24px;
+
+        flex-direction:column;
+
+        gap:14px;
+    }
+
+    nav ul{
+        gap:16px;
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+    }
+
+    .hero-content{
+        padding:42px 28px;
+    }
+
+    .hero-brand{
+        font-size:3.4rem;
+    }
+
+    .hero-main-copy{
+        font-size:1.5rem;
+    }
+
+    .philosophy-layout,
+    .work-layout{
+        flex-direction:column;
+    }
+
+    .stance-grid{
+        grid-template-columns:1fr;
+    }
+
+    .service-body{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-info{
+        text-align:left;
+    }
+
+    .story-box{
+        padding:40px 24px;
+    }
+}
+
+</style>
 </head>
+
 <body>
 
-    <header>
-        <a href="#" class="logo">TDNM</a>
-        <nav class="header-nav">
-            <ul>
-                <li><a href="#philosophy">Philosophy</a></li>
-                <li><a href="#stance">Stance</a></li>
-                <li><a href="#what-we-do">What We Do</a></li>
-                <li><a href="#how-we-work">How We Work</a></li>
-                <li><a href="#story">Story</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+<header>
 
-    <section id="hero">
-        <div class="hero-content">
-            <h1 class="hero-brand">TDNM</h1>
-            <div class="hero-tagline">Everything Flows</div>
-            <div class="hero-main-copy">
-                世界観や価値観を、<br>
-                かたちにする。
-            </div>
-            <div class="hero-sub-copy">
-                整理されていない想いも、まだ言葉になっていない構想も、<br>
-                その奥にある「本質」から整えていく。<br>
-                変わり続ける時代の中で、流れに逆らわず、<br>
-                でも、自分の芯は見失わない。<br><br>
-                徒然なるままに。。。
-            </div>
-        </div>
-        <div class="scroll-down">scroll</div>
-    </section>
+<a href="#" class="logo">
+TDNM
+</a>
 
-    <section id="philosophy">
-        <div class="container">
-            <div class="philosophy-layout">
-                <div class="philosophy-text fade-in">
-                    <span class="en-title">Philosophy</span>
-                    <h2 class="section-title">思想</h2>
-                    <p>世界は、ずっと流れ続けている。<br>人も、働き方も、価値観も、少しずつ形を変えていく。</p>
-                    <p>変わることは、失うことじゃない。<br>流れの中で削ぎ落とされながら、本当に大切なものだけが残っていく。</p>
-                    <p>TDNMは、本来の自分を大切にしながら、無理をせず、でも、誤魔化さず、自分たちらしいスタンスを創ることを選び続けています。</p>
-                    <p>整えることは、飾ることではなく、本質を見つけること。<br>ゆるく、生きる。でも、芯はまっすぐに。</p>
-                </div>
-                <div class="image-frame fade-in">
-                    <img src="https://images.unsplash.com/photo-1601556109533-d0892be2c66d?auto=format&fit=crop&q=80&w=800" alt="Soft dappled light and delicate leaf shadows on an earthy neutral background">
-                </div>
-            </div>
-        </div>
-    </section>
+<nav>
+<ul>
+<li><a href="#philosophy">Philosophy</a></li>
+<li><a href="#stance">Stance</a></li>
+<li><a href="#what">What We Do</a></li>
+<li><a href="#work">How We Work</a></li>
+<li><a href="#story">Story</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
 
-    <section id="stance">
-        <div class="container">
-            <span class="en-title">Our Stance</span>
-            <h2 class="section-title">価値観</h2>
-            <div class="stance-grid">
-                <div class="stance-card fade-in">
-                    <h3>Flow</h3>
-                    <div class="stance-ja">変化を恐れない</div>
-                    <p>世界も、人も、いつも流れ続けている。だからこそ、今の自分に合った形へ、しなやかに変化していく。</p>
-                </div>
-                <div class="stance-card fade-in">
-                    <h3>Natural</h3>
-                    <div class="stance-ja">無理をしない</div>
-                    <p>背伸びした言葉より、自然体の温度感を大切にする。“ちゃんとして見えること”より、“ちゃんと伝わること”。</p>
-                </div>
-                <div class="stance-card fade-in">
-                    <h3>Core</h3>
-                    <div class="stance-ja">ゆるくても、ブレない</div>
-                    <p>流されることと、柔軟であることは違う。静かな芯を持ちながら、その人らしい形を整えていく。</p>
-                </div>
-            </div>
-        </div>
-    </section>
+</header>
 
-    <section id="what-we-do">
-        <div class="container">
-            <span class="en-title">What We Do</span>
-            <h2 class="section-title">事業内容</h2>
-            <div class="section-intro fade-in">
-                想いを、社会に翻訳する。<br>
-                TDNMは、単なる制作会社ではありません。「何を作るか」の前に、“本当は何を伝えたいのか”を整理するところから始めます。
-            </div>
-            <div class="services-list">
-                <div class="service-item fade-in">
-                    <div class="service-num">01</div>
-                    <div class="service-body">
-                        <h3>コンセプト整理 /<br>MVV設計</h3>
-                        <p>頭の中にある想いや感覚を、伝わる言葉へ整理します。理念・世界観・ブランドの軸を、一緒に言語化します。</p>
-                    </div>
-                </div>
-                <div class="service-item fade-in">
-                    <div class="service-num">02</div>
-                    <div class="service-body">
-                        <h3>サービス構造化 /<br>事業整理</h3>
-                        <p>やりたいことが多すぎて整理できない。伝えたいことが散らかっている。そんな状態から、「誰に・何を・どう届けるか」を整えていきます。</p>
-                    </div>
-                </div>
-                <div class="service-item fade-in">
-                    <div class="service-num">03</div>
-                    <div class="service-body">
-                        <h3>提案資料 /<br>ブランド提案</h3>
-                        <p>ただ綺麗なだけでは終わらない。温度感・思想・空気感まで含めて、“伝わる提案”を設計します。</p>
-                    </div>
-                </div>
-                <div class="service-item fade-in">
-                    <div class="service-num">04</div>
-                    <div class="service-body">
-                        <h3>Web /<br>ビジュアル制作</h3>
-                        <p>世界観を、視覚として表現する。ロゴ、Web、SNS、資料、ビジュアル。ブランドの空気感まで一貫して設計します。</p>
-                    </div>
-                </div>
-                <div class="service-item fade-in">
-                    <div class="service-num">05</div>
-                    <div class="service-body">
-                        <h3>AI活用 /<br>業務導線整理</h3>
-                        <p>AIを使うことが目的ではなく、“人が本来やりたいこと”に集中できる状態をつくる。苦手な実務や整理を、無理のない形でサポートします。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section id="hero">
 
-    <section id="how-we-work">
-        <div class="container">
-            <div class="work-layout">
-                <div class="work-text fade-in">
-                    <span class="en-title">How We Work</span>
-                    <h2 class="section-title">制作スタンス</h2>
-                    <p>TDNMは、「何を作るか」より、「何を伝えたいか」を一緒に考えるチームです。</p>
-                    <p>きれいなデザインより、正直な言葉。<br>目立つ表現より、残っていく意味。<br>流行を追うより、その人らしい“スタンス”を整える。</p>
-                    <p>私たちは、完成品だけを作りたいわけではありません。<br>言葉になる前の想い。整理しきれていない熱量。まだ途中の構想。そういう“流れの途中”から、一緒に伴走していきます。</p>
-                </div>
-                <div class="image-frame fade-in">
-                    <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800" alt="Minimalist organic workspace with linen textile, ceramic cup and warm natural sunlight">
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="hero-content fade">
 
-    <section id="story">
-        <div class="container">
-            <div class="story-content fade-in">
-                <span class="en-title">Story</span>
-                <h2 class="section-title">背景</h2>
-                <p>仏教の精神に触れながら育ち、「静かな芯」を大切にしてきました。</p>
-                <p>everything flows ―― すべては流れ、変わり続ける。</p>
-                <p>その感覚をもちながらも、ゆるく、自分らしく、まっすぐに生きてきた人生。</p>
-                <p>子育ても、仕事も、ものづくりも、コントロールしすぎない。管理するより、それぞれを信じる。その人自身が持つ力を、ちゃんと尊重する。TDNMのスタンスは、そんな人生観から生まれています。</p>
-                <p>私たちは、“正解を押しつける”ためではなく、その人の中に、すでにある想いや価値を、一緒に見つけ、整え、社会へ届けるために存在しています。</p>
-            </div>
-        </div>
-    </section>
+<h1 class="hero-brand">
+TDNM
+</h1>
 
-    <section id="contact">
-        <div class="container">
-            <div class="contact-box fade-in">
-                <span class="en-title">Contact</span>
-                <h2 class="section-title">お問い合わせ</h2>
-                <p>まだ言葉になっていない想いでも構いません。<br>流れの途中の構想でも、まとまっていない相談でも大丈夫です。<br>「なんとなく、こうしたい気がする」<br>その感覚から、一緒に整理していきましょう。</p>
-                <div class="contact-cta">想いを整理するところから、はじめませんか。</div>
-                <a href="mailto:hello@tdnm.design" class="btn-contact">お問い合わせ</a>
-            </div>
-        </div>
-    </section>
+<div class="hero-tagline">
+Everything Flows
+</div>
 
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <h2>TDNM</h2>
-                    <div class="tagline">Everything Flows</div>
-                </div>
-                <div class="footer-info">
-                    運営：TDNM<br>
-                    所在地：埼玉県三郷市<br>
-                    個人事業主届出済
-                </div>
-            </div>
-            <div class="copyright">
-                &copy; 2026 TDNM All Rights Reserved.
-            </div>
-        </div>
-    </footer>
+<div class="hero-main-copy">
+世界観や価値観を、<br>
+かたちにする。
+</div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const fadeElements = document.querySelectorAll('.fade-in');
-            
-            const observerOptions = {
-                root: null,
-                threshold: 0.1,
-                rootMargin: "0px 0px -50px 0px"
-            };
+<div class="hero-sub-copy">
+整理されていない想いも、<br>
+まだ言葉になっていない構想も。<br><br>
 
-            const observer = new IntersectionObserver(function(entries, observer) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
+その奥にある「本質」から整えていく。<br>
 
-            fadeElements.forEach(el => {
-                observer.observe(el);
-            });
-        });
-    </script>
+流れに逆らわず、<br>
+でも、自分の芯は見失わない。<br><br>
+
+徒然なるままに。
+</div>
+
+</div>
+
+<div class="scroll">
+scroll
+</div>
+
+</section>
+
+<section id="philosophy">
+
+<div class="container">
+
+<div class="philosophy-layout">
+
+<div class="philosophy-text fade">
+
+<span class="en-title">
+Philosophy
+</span>
+
+<h2 class="section-title">
+思想
+</h2>
+
+<p>
+世界は、ずっと流れ続けている。<br>
+人も、働き方も、価値観も、少しずつ形を変えていく。
+</p>
+
+<p>
+変わることは、失うことじゃない。<br>
+流れの中で削ぎ落とされながら、<br>
+本当に大切なものだけが残っていく。
+</p>
+
+<p>
+TDNMは、本来の自分を大切にしながら、<br>
+無理をせず、でも、誤魔化さず、<br>
+自分たちらしいスタンスを創ることを選び続けています。
+</p>
+
+<p>
+整えることは、飾ることではなく、<br>
+本質を見つけること。<br><br>
+
+ゆるく、生きる。<br>
+でも、芯はまっすぐに。
+</p>
+
+</div>
+
+<div class="philosophy-image image-frame fade">
+
+<img src="./assets/images/philosophy.png" alt="philosophy">
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="stance">
+
+<div class="container">
+
+<span class="en-title">
+Our Stance
+</span>
+
+<h2 class="section-title">
+価値観
+</h2>
+
+<div class="stance-grid">
+
+<div class="stance-card fade">
+
+<h3>
+Flow
+</h3>
+
+<div class="stance-ja">
+変化を恐れない
+</div>
+
+<p>
+世界も、人も、流れ続けている。<br>
+だからこそ、今の自分に合った形へ、しなやかに変化していく。
+</p>
+
+</div>
+
+<div class="stance-card fade">
+
+<h3>
+Natural
+</h3>
+
+<div class="stance-ja">
+無理をしない
+</div>
+
+<p>
+背伸びした言葉より、自然体の温度感を大切にする。<br>
+“ちゃんとして見えること”より、“ちゃんと伝わること”。
+</p>
+
+</div>
+
+<div class="stance-card fade">
+
+<h3>
+Core
+</h3>
+
+<div class="stance-ja">
+ゆるくても、ブレない
+</div>
+
+<p>
+流されることと、柔軟であることは違う。<br>
+静かな芯を持ちながら、その人らしい形を整えていく。
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="what">
+
+<div class="container">
+
+<span class="en-title">
+What We Do
+</span>
+
+<h2 class="section-title">
+事業内容
+</h2>
+
+<div class="intro fade">
+
+想いを、社会に翻訳する。<br>
+
+TDNMは、単なる制作会社ではありません。<br>
+
+「何を作るか」の前に、<br>
+“本当は何を伝えたいのか”を整理するところから始めます。
+
+</div>
+
+<div class="services">
+
+<div class="service fade">
+
+<div class="service-num">
+01
+</div>
+
+<div class="service-body">
+
+<h3>
+コンセプト整理 /<br>
+MVV設計
+</h3>
+
+<p>
+頭の中にある想いや感覚を、伝わる言葉へ整理します。理念・世界観・ブランドの軸を、一緒に言語化します。
+</p>
+
+</div>
+
+</div>
+
+<div class="service fade">
+
+<div class="service-num">
+02
+</div>
+
+<div class="service-body">
+
+<h3>
+サービス構造化 /<br>
+事業整理
+</h3>
+
+<p>
+やりたいことが多すぎて整理できない。伝えたいことが散らかっている。そんな状態から、「誰に・何を・どう届けるか」を整えていきます。
+</p>
+
+</div>
+
+</div>
+
+<div class="service fade">
+
+<div class="service-num">
+03
+</div>
+
+<div class="service-body">
+
+<h3>
+提案資料 /<br>
+ブランド提案
+</h3>
+
+<p>
+ただ綺麗なだけでは終わらない。温度感・思想・空気感まで含めて、“伝わる提案”を設計します。
+</p>
+
+</div>
+
+</div>
+
+<div class="service fade">
+
+<div class="service-num">
+04
+</div>
+
+<div class="service-body">
+
+<h3>
+Web /<br>
+ビジュアル制作
+</h3>
+
+<p>
+世界観を、視覚として表現する。ロゴ、Web、SNS、資料、ビジュアル。ブランドの空気感まで一貫して設計します。
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="work">
+
+<div class="container">
+
+<div class="work-layout">
+
+<div class="work-text fade">
+
+<span class="en-title">
+How We Work
+</span>
+
+<h2 class="section-title">
+制作スタンス
+</h2>
+
+<p>
+TDNMは、「何を作るか」より、<br>
+「何を伝えたいか」を一緒に考えるチームです。
+</p>
+
+<p>
+きれいなデザインより、正直な言葉。<br>
+目立つ表現より、残っていく意味。<br>
+流行を追うより、その人らしい“スタンス”を整える。
+</p>
+
+<p>
+言葉になる前の想い。<br>
+整理しきれていない熱量。<br>
+まだ途中の構想。<br><br>
+
+そういう“流れの途中”から、<br>
+一緒に伴走していきます。
+</p>
+
+</div>
+
+<div class="work-image image-frame fade">
+
+<img src="./assets/images/work.png" alt="work">
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="story">
+
+<div class="container">
+
+<div class="story-box fade">
+
+<span class="en-title">
+Story
+</span>
+
+<h2 class="section-title">
+背景
+</h2>
+
+<p>
+everything flows ――<br>
+すべては流れ、変わり続ける。
+</p>
+
+<p>
+仏教の精神に触れながら育ち、<br>
+「静かな芯」を大切にしてきました。
+</p>
+
+<p>
+子育ても、仕事も、ものづくりも。<br>
+コントロールしすぎない。<br>
+管理するより、それぞれを信じる。
+</p>
+
+<p>
+その人自身が持つ力を、ちゃんと尊重する。<br>
+TDNMのスタンスは、そんな人生観から生まれています。
+</p>
+
+<p>
+私たちは、“正解を押しつける”ためではなく、<br>
+その人の中に、すでにある想いや価値を、<br>
+一緒に見つけ、整え、社会へ届けるために存在しています。
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="contact">
+
+<div class="container">
+
+<div class="contact-box fade">
+
+<span class="en-title">
+Contact
+</span>
+
+<h2 class="section-title">
+お問い合わせ
+</h2>
+
+<p>
+まだ言葉になっていない想いでも構いません。<br>
+流れの途中の構想でも、まとまっていない相談でも大丈夫です。<br><br>
+
+「なんとなく、こうしたい気がする」<br>
+
+その感覚から、一緒に整理していきましょう。
+</p>
+
+<div class="contact-cta">
+想いを整理するところから、はじめませんか。
+</div>
+
+<a href="mailto:hello@tdnm.design" class="btn">
+Contact
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+<div class="footer-brand">
+
+<h2>
+TDNM
+</h2>
+
+<p>
+Everything Flows
+</p>
+
+</div>
+
+<div class="footer-info">
+
+運営：TDNM<br>
+所在地：埼玉県三郷市<br>
+個人事業主届出済
+
+</div>
+
+</div>
+
+<div class="copy">
+© 2026 TDNM All Rights Reserved.
+</div>
+
+</div>
+
+</footer>
+
+<script>
+
+const fadeElements = document.querySelectorAll('.fade');
+
+const observer = new IntersectionObserver((entries)=>{
+
+entries.forEach((entry)=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add('show');
+
+}
+
+});
+
+},{
+threshold:0.15
+});
+
+fadeElements.forEach((el)=>{
+observer.observe(el);
+});
+
+</script>
+
 </body>
 </html>
+```
