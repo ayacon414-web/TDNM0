@@ -44,14 +44,14 @@
         }
 
         section {
-            padding: 100px 0;
+            padding: 120px 0;
             position: relative;
         }
 
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 1.2s ease, transform 1.2s ease;
+            transition: opacity 1.4s ease, transform 1.4s ease;
         }
 
         .fade-in.visible {
@@ -91,7 +91,7 @@
             align-items: center;
             z-index: 1000;
             background: rgba(245, 241, 235, 0.85);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
 
         .logo {
@@ -112,13 +112,18 @@
             text-align: center;
             padding-top: 100px;
             overflow: hidden;
-            background: radial-gradient(circle at 80% 20%, rgba(216, 181, 138, 0.15), transparent 50%),
-                        radial-gradient(circle at 10% 80%, rgba(74, 58, 42, 0.05), transparent 40%);
+            background: linear-gradient(rgba(245, 241, 235, 0.4), rgba(245, 241, 235, 0.4)), 
+                        url('https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&q=80&w=1600') no-repeat center center;
+            background-size: cover;
         }
 
         .hero-content {
             max-width: 800px;
             z-index: 2;
+            background: rgba(245, 241, 235, 0.6);
+            padding: 40px 60px;
+            backdrop-filter: blur(4px);
+            border-radius: 2px;
         }
 
         .hero-brand {
@@ -165,7 +170,7 @@
             font-family: var(--font-en);
             font-size: 0.75rem;
             letter-spacing: 0.2em;
-            color: var(--accent-color);
+            color: var(--main-color);
             text-transform: uppercase;
             writing-mode: vertical-lr;
             animation: pulse 2.5s infinite;
@@ -189,7 +194,7 @@
         }
 
         .philosophy-text {
-            flex: 1;
+            flex: 1.1;
             font-size: 1.05rem;
             line-height: 2.3;
             font-weight: 300;
@@ -203,26 +208,23 @@
             margin-bottom: 0;
         }
 
-        .philosophy-image-box {
-            flex: 1;
+        .image-frame {
+            flex: 0.9;
             position: relative;
-        }
-
-        .svg-container {
-            width: 100%;
-            padding-top: 120%;
-            position: relative;
-            background: var(--bg-color);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.02);
             overflow: hidden;
+            box-shadow: 0 15px 35px rgba(74, 58, 42, 0.05);
         }
 
-        .svg-container svg {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .image-frame img {
             width: 100%;
-            height: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            transition: transform 1.2s ease;
+        }
+
+        .image-frame:hover img {
+            transform: scale(1.03);
         }
 
         /* --- Our Stance Section --- */
@@ -323,24 +325,25 @@
         .work-layout {
             display: flex;
             gap: 80px;
-            align-items: stretch;
+            align-items: center;
         }
 
         .work-text {
-            flex: 1.2;
+            flex: 1.1;
             font-size: 1.05rem;
             line-height: 2.2;
             font-weight: 300;
-        }
-
-        .work-image-box {
-            flex: 0.8;
         }
 
         /* --- Story Section --- */
         #story {
             background-color: var(--main-color);
             color: #F5F1EB;
+            padding: 140px 0;
+            background: linear-gradient(rgba(74, 58, 42, 0.85), rgba(74, 58, 42, 0.85)), 
+                        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1600') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
         }
 
         #story .section-title, #story .en-title {
@@ -351,9 +354,12 @@
             max-width: 800px;
             margin: 0 auto;
             font-size: 1.05rem;
-            line-height: 2.3;
+            line-height: 2.4;
             font-weight: 300;
             text-align: justify;
+            background: rgba(74, 58, 42, 0.6);
+            padding: 50px 60px;
+            backdrop-filter: blur(4px);
         }
 
         .story-content p {
@@ -463,6 +469,9 @@
                 flex-direction: column;
                 gap: 40px;
             }
+            .image-frame {
+                width: 100%;
+            }
             .stance-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -484,8 +493,11 @@
             .hero-main-copy {
                 font-size: 1.5rem;
             }
+            .hero-content, .story-content {
+                padding: 30px 25px;
+            }
             section {
-                padding: 70px 0;
+                padding: 80px 0;
             }
         }
     </style>
@@ -509,7 +521,7 @@
                 その奥にある「本質」から整えていく。<br>
                 変わり続ける時代の中で、流れに逆らわず、<br>
                 でも、自分の芯は見失わない。<br><br>
-                徒然なるままに。ゆるく、でも、まっすぐに。
+                徒然なるままに。ゆるく、ベースはまっすぐに。
             </div>
         </div>
         <div class="scroll-down">scroll</div>
@@ -526,23 +538,8 @@
                     <p>TDNMは、「徒然なるままに」という感覚を大切にしながら、無理をせず、でも、誤魔化さず、自分たちらしいスタンスで創ることを選び続けています。</p>
                     <p>整えることは、飾ることではなく、本質を見つけること。<br>ゆるく、生きる。でも、芯はまっすぐに。</p>
                 </div>
-                <div class="philosophy-image-box fade-in">
-                    <div class="svg-container">
-                        <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#F5F1EB;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#E3DDD5;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <rect width="400" height="480" fill="url(#grad1)"/>
-                            <path d="M-50,200 Q80,120 220,180 T450,120 L450,490 L-50,490 Z" fill="#ECE7E1" opacity="0.6"/>
-                            <path d="M-20,280 Q120,240 260,310 T430,220 L430,490 L-20,490 Z" fill="#E4DDD3" opacity="0.4"/>
-                            <path d="M300,-10 C280,60 220,120 180,180 C150,220 120,300 130,350" fill="none" stroke="#4A3A2A" stroke-width="0.5" opacity="0.15"/>
-                            <path d="M350,20 C320,90 270,160 240,210 C200,270 210,340 190,400" fill="none" stroke="#4A3A2A" stroke-width="0.5" opacity="0.1"/>
-                            <circle cx="280" cy="160" r="40" fill="none" stroke="#8C6A3D" stroke-width="0.5" opacity="0.25"/>
-                        </svg>
-                    </div>
+                <div class="image-frame fade-in">
+                    <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800" alt="Dappled light and natural texture">
                 </div>
             </div>
         </div>
@@ -630,18 +627,8 @@
                     <p>きれいなデザインより、正直な言葉。<br>目立つ表現より、残っていく意味。<br>流行を追うより、その人らしい“スタンス”を整える。</p>
                     <p>私たちは、完成品だけを作りたいわけではありません。<br>言葉になる前の想い。整理しきれていない熱量。まだ途中の構想。そういう“流れの途中”から、一緒に伴走していきます。</p>
                 </div>
-                <div class="work-image-box fade-in">
-                    <div class="svg-container">
-                        <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="400" height="480" fill="#Fdfbf7"/>
-                            <path d="M 50,400 C 150,380 200,450 350,420" fill="none" stroke="#D8B58A" stroke-width="1.5"/>
-                            <path d="M 30,415 C 130,395 210,460 370,430" fill="none" stroke="#D8B58A" stroke-width="0.5"/>
-                            <text x="40" y="80" font-family="'Montserrat', sans-serif" font-weight="300" font-size="12" fill="#8C6A3D" letter-spacing="4">EVERYTHING FLOWS</text>
-                            <circle cx="200" cy="240" r="70" fill="none" stroke="#4A3A2A" stroke-width="0.5" stroke-dasharray="2, 4"/>
-                            <circle cx="210" cy="235" r="55" fill="#4A3A2A" opacity="0.03"/>
-                            <circle cx="190" cy="250" r="60" fill="#8C6A3D" opacity="0.02"/>
-                        </svg>
-                    </div>
+                <div class="image-frame fade-in">
+                    <img src="https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?auto=format&fit=crop&q=80&w=800" alt="Minimalist studio and workspace context">
                 </div>
             </div>
         </div>
@@ -653,7 +640,8 @@
                 <span class="en-title">Story</span>
                 <h2 class="section-title">背景</h2>
                 <p>仏教の精神に触れながら育ち、「静かな芯」を大切にして生きてきました。</p>
-                <p>everything flows ―― すべては流れ、変わり続ける。<br>その感覚を信じながら、ゆるく、ベースはまっすぐに生きてきた人生。</p>
+                <p>everything flows ―― すべては流れ、変わり続ける。</p>
+                <p>その感覚をもちながらも、ゆるく、自分らしく、まっすぐに生きてきた人生。</p>
                 <p>子育ても、仕事も、ものづくりも、コントロールしすぎない。管理するより、それぞれの流れを信じる。その人自身が持つ力を、ちゃんと尊重する。TDNMのスタンスは、そんな人生観から生まれています。</p>
                 <p>私たちは、“正解を押しつける”ためではなく、その人の中に、すでにある想いや価値を、一緒に見つけ、整え、社会へ届けるために存在しています。</p>
             </div>
@@ -667,7 +655,7 @@
                 <h2 class="section-title">お問い合わせ</h2>
                 <p>まだ言葉になっていない想いでも構いません。<br>流れの途中の構想でも、まとまっていない相談でも大丈夫です。<br>「なんとなく、こうしたい気がする」<br>その感覚から、一緒に整理していきましょう。</p>
                 <div class="contact-cta">想いを整理するところから、はじめませんか。</div>
-                <a href="mailto:hello@tdnm.design" class="btn-contact">お問い合わせ</a>
+                <a href="mailto:hello@tdnm.design" class="btn-contact">□お問い合わせ□</a>
             </div>
         </div>
     </section>
